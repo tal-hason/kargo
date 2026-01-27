@@ -215,7 +215,32 @@ build-cli-with-ui: build-ui build-cli
 ################################################################################
 
 .PHONY: codegen
-codegen: codegen-proto codegen-controller codegen-directive-configs codegen-ui codegen-docs
+codegen: codegen-openapi codegen-schema-to-go codegen-proto codegen-controller codegen-ui codegen-docs
+
+.PHONY: codegen-openapi
+codegen-openapi: install-swag install-go-swagger
+	rm -f swagger.yaml swagger.json
+	rm -rf pkg/client/generated
+	rm -rf /tmp/swagger-build
+	mkdir -p /tmp/swagger-build
+	$(SWAG_LINK) init \
+		--generalInfo pkg/server/rest_router.go \
+		--output /tmp/swagger-build \
+		--parseDependency \
+		--parseInternal \
+		--outputTypes yaml,json
+	mv /tmp/swagger-build/swagger.yaml .
+	mv /tmp/swagger-build/swagger.json .
+	rm -rf /tmp/swagger-build
+	mkdir -p pkg/client/generated
+	$(GO_SWAGGER_LINK) generate client \
+		-f swagger.json \
+		-t pkg \
+		--client-package client/generated \
+		--model-package client/generated/models \
+		--skip-validation
+	pnpm --dir=ui install --dev
+	pnpm --dir=ui run generate:api
 
 .PHONY: codegen-proto
 codegen-proto: install-protoc install-go-to-protobuf install-protoc-gen-gogo install-goimports install-buf install-protoc-gen-doc
@@ -233,10 +258,11 @@ codegen-controller: install-controller-gen
 		object:headerFile=hack/boilerplate.go.txt \
 		paths=./...
 
-.PHONY: codegen-directive-configs
-codegen-directive-configs:
+.PHONY: codegen-schema-to-go
+codegen-schema-to-go:
 	npm install -g quicktype@23.0.176
 	./hack/codegen/promotion-step-configs.sh
+	./hack/codegen/subscriptions.sh
 
 .PHONY: codegen-ui
 codegen-ui:
@@ -333,7 +359,7 @@ hack-codegen: hack-build-dev-tools
 .PHONY: hack-build
 hack-build: build-base-image
 	{ \
-		$(CONTAINER_RUNTIME) run -d -p $(LOCAL_REG_PORT):5000 --name tmp-registry registry:2; \
+		$(CONTAINER_RUNTIME) run -d -p $(LOCAL_REG_PORT):5000 --name tmp-registry registry:3.0.0; \
 		trap '$(CONTAINER_RUNTIME) rm -f tmp-registry' EXIT; \
 		$(CONTAINER_RUNTIME) push $(BASE_IMAGE):latest-amd64; \
 		$(CONTAINER_RUNTIME) push $(BASE_IMAGE):latest-arm64; \

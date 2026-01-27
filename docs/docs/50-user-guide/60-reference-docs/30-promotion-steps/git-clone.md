@@ -14,8 +14,10 @@ multiple sources or rendering Stage-specific manifests to a Stage-specific
 branch.
 
 :::note
+
 It is a noteworthy limitation of Git that one branch cannot be checked out in
 multiple working trees.
+
 :::
 
 ## Configuration
@@ -35,6 +37,7 @@ multiple working trees.
 | `checkout[].commit` | `string` | N | A specific commit to check out. Mutually exclusive with `branch` and `tag`. If none of these is specified, the default branch will be checked out. |
 | `checkout[].path` | `string` | Y | The path for a working tree that will be created from the checked out revision. This path is relative to the temporary workspace that Kargo provisions for use by the promotion process. |
 | `checkout[].tag` | `string` | N | A tag to check out. Mutually exclusive with `branch` and `commit`. If none of these is specified, the default branch will be checked out. |
+| `checkout[].sparse` | `[]string` | N | Directory paths for sparse checkout. Only the specified directories (and their contents) will be checked out. Paths must be relative to the repository root (e.g., `src/app`, `configs/prod`). Glob patterns are not supported. When all checkouts use sparse patterns, a [blobless clone][] is performed automatically to reduce clone time and disk usage. |
 
 ## Output
 
@@ -52,8 +55,10 @@ likely to perform actions that revise the contents of the Stage-specific branch
 using the commit from the Freight as input.
 
 :::info
+
 For more information on `commitFrom` and expressions, see the
 [Expressions](../40-expressions.md#functions) documentation.
+
 :::
 
 ```yaml
@@ -84,8 +89,10 @@ with the help of a [`copy` step](copy.md). For this case, a `git-clone` step
 may be configured similarly to the following.
 
 :::info
+
 For more information on `commitFrom` and expressions, see the
 [Expressions](../40-expressions.md#functions) documentation.
+
 :::
 
 ```yaml
@@ -117,3 +124,34 @@ steps:
     outPath: ./out
 # Commit, push, etc...
 ```
+
+### Sparse Checkout
+
+For large repositories, you can use sparse checkout to check out only specific
+directories, reducing clone time and disk usage. When all checkouts specify
+sparse patterns, Kargo automatically uses a [blobless clone][], which avoids
+downloading file contents for directories that won't be checked out.
+
+```yaml
+vars:
+- name: gitRepo
+  value: https://github.com/example/repo.git
+steps:
+- uses: git-clone
+  config:
+    repoURL: ${{ vars.gitRepo }}
+    checkout:
+    - commit: ${{ commitFrom(vars.gitRepo).ID }}
+      path: ./src
+      sparse:
+      - charts/my-app
+      - configs/common
+    - branch: stage/${{ ctx.stage }}
+      create: true
+      path: ./out
+      sparse:
+      - stages/${{ ctx.stage }}
+# Work with the sparse checkouts...
+```
+
+[blobless clone]: https://github.blog/open-source/git/get-up-to-speed-with-partial-clone-and-shallow-clone/

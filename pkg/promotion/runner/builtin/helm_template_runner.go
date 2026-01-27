@@ -185,13 +185,29 @@ func (h *helmTemplateRunner) composeValues(
 		if err != nil {
 			return nil, fmt.Errorf("failed to join path %q: %w", p, err)
 		}
+		if cfg.IgnoreMissingValueFiles {
+			if _, err := os.Stat(absValuesPath); os.IsNotExist(err) {
+				continue
+			}
+		}
 		valueOpts.ValueFiles = append(valueOpts.ValueFiles, absValuesPath)
 	}
-	setValueStrVal := make([]string, len(cfg.SetValues))
-	for i, setValue := range cfg.SetValues {
-		setValueStrVal[i] = fmt.Sprintf("%s=%s", setValue.Key, setValue.Value)
+
+	// Process setValues, separating forceString values from regular values
+	for _, setValue := range cfg.SetValues {
+		if setValue.Literal {
+			// When literal is true, use --set-literal behavior.
+			valueOpts.LiteralValues = append(
+				valueOpts.LiteralValues,
+				fmt.Sprintf("%s=%s", setValue.Key, setValue.Value),
+			)
+			continue
+		}
+
+		// Default behavior uses --set which allows type inference.
+		valueOpts.Values = append(valueOpts.Values, fmt.Sprintf("%s=%s", setValue.Key, setValue.Value))
 	}
-	valueOpts.Values = append(valueOpts.Values, setValueStrVal...)
+
 	return valueOpts.MergeValues(nil)
 }
 

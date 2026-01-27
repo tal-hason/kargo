@@ -31,10 +31,10 @@ var registration = gitprovider.Registration{
 			return false
 		}
 		// We assume that any hostname with the word "github" in it can use this
-		// provider. NOTE: We will miss cases where the host is GitHub Enterprise
-		// but doesn't incorporate the word "github" in the hostname. e.g.
-		// 'git.mycompany.com'
-		return strings.Contains(u.Host, ProviderName)
+		// provider. We also explicitly support 'ghe.com' (GitHub Enterprise Cloud).
+		// NOTE: We will miss cases where the host is GitHub Enterprise
+		// but doesn't incorporate the word "github" or "ghe.com" (e.g. 'git.mycompany.com').
+		return strings.Contains(u.Host, ProviderName) || strings.HasSuffix(u.Host, ".ghe.com")
 	},
 	NewProvider: func(
 		repoURL string,
@@ -316,7 +316,7 @@ func (p *provider) MergePullRequest(
 	case ptr.Deref(ghPR.State, prStateClosed) != prStateOpen:
 		return nil, false, fmt.Errorf("pull request %d is closed but not merged", id)
 
-	case ghPR.Mergeable == nil || !*ghPR.Mergeable || (ghPR.Draft != nil && *ghPR.Draft):
+	case ptr.Deref(ghPR.Draft, false) || !ptr.Deref(ghPR.Mergeable, false):
 		return nil, false, nil
 	}
 
@@ -345,6 +345,7 @@ func (p *provider) MergePullRequest(
 	}
 
 	pr := convertGithubPR(*updatedPR)
+
 	return &pr, true, nil
 }
 

@@ -329,6 +329,7 @@ func (r *reconciler) Reconcile(
 	newStatus := promo.Status.DeepCopy()
 
 	var suggestedRequeueInterval *time.Duration
+	var promoteErr error
 
 	// Wrap the promoteFn() call in an anonymous function to recover() any panics, so
 	// we can update the promo's phase with Error if it does. This breaks an infinite
@@ -346,7 +347,6 @@ func (r *reconciler) Reconcile(
 			}
 		}()
 		var otherStatus *kargoapi.PromotionStatus
-		var promoteErr error
 		otherStatus, suggestedRequeueInterval, promoteErr = r.promoteFn(
 			promoCtx,
 			*promo,
@@ -357,7 +357,10 @@ func (r *reconciler) Reconcile(
 			newStatus = otherStatus
 		}
 		if promoteErr != nil {
-			newStatus.Phase = kargoapi.PromotionPhaseErrored
+			// Preserve Running status for progressive backoff on retryable errors.
+			if newStatus.Phase != kargoapi.PromotionPhaseRunning || otherStatus == nil {
+				newStatus.Phase = kargoapi.PromotionPhaseErrored
+			}
 			newStatus.Message = promoteErr.Error()
 			logger.Error(promoteErr, "error executing Promotion")
 		}
@@ -458,9 +461,13 @@ func (r *reconciler) Reconcile(
 		return ctrl.Result{}, err
 	}
 
-	// If the promotion is still running, we'll need to periodically check on
-	// it.
+	// If the promotion is still running, we'll need to periodically check on it.
 	if newStatus.Phase == kargoapi.PromotionPhaseRunning {
+		if promoteErr != nil {
+			// Retryable error: use progressive backoff.
+			return ctrl.Result{}, promoteErr
+		}
+		// Waiting for external condition: use calculated interval.
 		return ctrl.Result{
 			RequeueAfter: calculateRequeueInterval(ctx, promo, suggestedRequeueInterval),
 		}, nil
@@ -499,11 +506,12 @@ func (r *reconciler) promote(
 	logger = logger.WithValues("targetFreight", targetFreight.Name)
 
 	targetFreightRef := kargoapi.FreightReference{
-		Name:    targetFreight.Name,
-		Commits: targetFreight.Commits,
-		Images:  targetFreight.Images,
-		Charts:  targetFreight.Charts,
-		Origin:  targetFreight.Origin,
+		Name:      targetFreight.Name,
+		Commits:   targetFreight.Commits,
+		Images:    targetFreight.Images,
+		Charts:    targetFreight.Charts,
+		Artifacts: targetFreight.Artifacts,
+		Origin:    targetFreight.Origin,
 	}
 
 	// Make a deep copy of the Promotion to pass to the promotion steps execution
@@ -560,7 +568,6 @@ func (r *reconciler) promote(
 		)
 	}
 	if err != nil {
-		workingPromo.Status.Phase = kargoapi.PromotionPhaseErrored
 		return &workingPromo.Status, nil, err
 	}
 

@@ -1,36 +1,39 @@
 package server
 
 import (
-	"context"
+	"net/http"
 
-	"connectrpc.com/connect"
-	"k8s.io/apimachinery/pkg/api/errors"
+	"github.com/gin-gonic/gin"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	svcv1alpha1 "github.com/akuity/kargo/api/service/v1alpha1"
+	kargoapi "github.com/akuity/kargo/api/v1alpha1"
 	"github.com/akuity/kargo/pkg/api"
 )
 
-func (s *server) RefreshProjectConfig(
-	ctx context.Context,
-	req *connect.Request[svcv1alpha1.RefreshProjectConfigRequest],
-) (*connect.Response[svcv1alpha1.RefreshProjectConfigResponse], error) {
-	project := req.Msg.GetProject()
-	if err := validateFieldNotEmpty("project", project); err != nil {
-		return nil, err
+// @id RefreshProjectConfig
+// @Summary Refresh ProjectConfig
+// @Description Refresh the single ProjectConfig resource in a project's
+// @Description namespace. Refreshing enqueues the resource for reconciliation
+// @Description by its corresponding controller.
+// @Tags Core, Config, Project-Level, Singleton
+// @Security BearerAuth
+// @Produce json
+// @Param project path string true "Project name"
+// @Success 200 "Success"
+// @Router /v1beta1/projects/{project}/config/refresh [post]
+func (s *server) refreshProjectConfig(c *gin.Context) {
+	ctx := c.Request.Context()
+
+	project := c.Param("project")
+
+	obj := &kargoapi.ProjectConfig{
+		ObjectMeta: metav1.ObjectMeta{Name: project, Namespace: project},
 	}
 
-	if err := s.validateProjectExists(ctx, project); err != nil {
-		return nil, err
+	if err := api.RefreshObject(ctx, s.client.InternalClient(), obj); err != nil {
+		_ = c.Error(err)
+		return
 	}
 
-	config, err := api.RefreshProjectConfig(ctx, s.client.InternalClient(), project)
-	if err != nil {
-		if errors.IsNotFound(err) {
-			return nil, connect.NewError(connect.CodeNotFound, err)
-		}
-		return nil, err
-	}
-	return connect.NewResponse(&svcv1alpha1.RefreshProjectConfigResponse{
-		ProjectConfig: config,
-	}), nil
+	c.Status(http.StatusOK)
 }

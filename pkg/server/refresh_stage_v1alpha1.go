@@ -1,52 +1,56 @@
 package server
 
 import (
-	"context"
+	"fmt"
+	"net/http"
 
-	"connectrpc.com/connect"
-	"sigs.k8s.io/controller-runtime/pkg/client"
+	"github.com/gin-gonic/gin"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	svcv1alpha1 "github.com/akuity/kargo/api/service/v1alpha1"
+	kargoapi "github.com/akuity/kargo/api/v1alpha1"
 	"github.com/akuity/kargo/pkg/api"
 )
 
-func (s *server) RefreshStage(
-	ctx context.Context,
-	req *connect.Request[svcv1alpha1.RefreshStageRequest],
-) (*connect.Response[svcv1alpha1.RefreshStageResponse], error) {
-	project := req.Msg.GetProject()
-	if err := validateFieldNotEmpty("project", project); err != nil {
-		return nil, err
-	}
-	name := req.Msg.GetName()
-	if err := validateFieldNotEmpty("name", name); err != nil {
-		return nil, err
+// @id RefreshStage
+// @Summary Refresh a Stage
+// @Description Refresh a Stage resource in a project's namespace. Refreshing
+// @Description enqueues the resource for reconciliation by its corresponding
+// @Description controller.
+// @Tags Core, Project-Level
+// @Security BearerAuth
+// @Produce json
+// @Param project path string true "Project name"
+// @Param stage path string true "Stage name"
+// @Success 200 "Success"
+// @Router /v1beta1/projects/{project}/stages/{stage}/refresh [post]
+func (s *server) refreshStage(c *gin.Context) {
+	ctx := c.Request.Context()
+
+	project := c.Param("project")
+	stageName := c.Param("stage")
+
+	stage := &kargoapi.Stage{
+		ObjectMeta: metav1.ObjectMeta{Name: stageName, Namespace: project},
 	}
 
-	if err := s.validateProjectExists(ctx, project); err != nil {
-		return nil, err
+	if err := api.RefreshObject(ctx, s.client.InternalClient(), stage); err != nil {
+		_ = c.Error(err)
+		return
 	}
 
-	objKey := client.ObjectKey{
-		Namespace: project,
-		Name:      name,
-	}
-	stage, err := api.RefreshStage(ctx, s.client.InternalClient(), objKey)
-	if err != nil {
-		return nil, err
-	}
-	// If there is a current promotion then refresh it too. Do this with the API
-	// server's own internal client so that individual users are not required to
-	// have this permission, which they really do not otherwise need.
+	// If there is a current Promotion then refresh it, too
 	if stage.Status.CurrentPromotion != nil {
-		if _, err := api.RefreshPromotion(ctx, s.client.InternalClient(), client.ObjectKey{
-			Namespace: project,
-			Name:      stage.Status.CurrentPromotion.Name,
-		}); err != nil {
-			return nil, err
+		promo := &kargoapi.Promotion{
+			ObjectMeta: metav1.ObjectMeta{
+				Namespace: project,
+				Name:      stage.Status.CurrentPromotion.Name,
+			},
+		}
+		if err := api.RefreshObject(ctx, s.client.InternalClient(), promo); err != nil {
+			_ = c.Error(fmt.Errorf("failed to refresh current Promotion: %w", err))
+			return
 		}
 	}
-	return connect.NewResponse(&svcv1alpha1.RefreshStageResponse{
-		Stage: stage,
-	}), nil
+
+	c.Status(http.StatusOK)
 }

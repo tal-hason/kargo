@@ -1,135 +1,64 @@
 package server
 
 import (
-	"context"
+	"net/http"
+	"net/http/httptest"
 	"testing"
-	"time"
 
-	"connectrpc.com/connect"
 	"github.com/stretchr/testify/require"
-	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/client-go/rest"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
-	svcv1alpha1 "github.com/akuity/kargo/api/service/v1alpha1"
 	kargoapi "github.com/akuity/kargo/api/v1alpha1"
-	"github.com/akuity/kargo/pkg/server/kubernetes"
-	"github.com/akuity/kargo/pkg/server/validation"
+	"github.com/akuity/kargo/pkg/server/config"
 )
 
-func TestRefreshProjectConfig(t *testing.T) {
-	testSets := map[string]struct {
-		req        *svcv1alpha1.RefreshProjectConfigRequest
-		objects    []client.Object
-		assertions func(*testing.T, *connect.Response[svcv1alpha1.RefreshProjectConfigResponse], error)
-	}{
-		"empty project": {
-			req: &svcv1alpha1.RefreshProjectConfigRequest{
-				Project: "",
-			},
-			objects: []client.Object{
-				mustNewObject[corev1.Namespace]("testdata/namespace.yaml"),
-			},
-			assertions: func(t *testing.T, r *connect.Response[svcv1alpha1.RefreshProjectConfigResponse], err error) {
-				require.Error(t, err)
-				require.Equal(t, connect.CodeInvalidArgument, connect.CodeOf(err))
-				require.Nil(t, r)
-			},
-		},
-		"non-existing project": {
-			req: &svcv1alpha1.RefreshProjectConfigRequest{
-				Project: "kargo-x",
-			},
-			objects: []client.Object{
-				mustNewObject[corev1.Namespace]("testdata/namespace.yaml"),
-			},
-			assertions: func(t *testing.T, r *connect.Response[svcv1alpha1.RefreshProjectConfigResponse], err error) {
-				require.Error(t, err)
-				require.Equal(t, connect.CodeNotFound, connect.CodeOf(err))
-				require.Nil(t, r)
-			},
-		},
-		"non-existing ProjectConfig": {
-			req: &svcv1alpha1.RefreshProjectConfigRequest{
-				Project: "kargo-demo",
-			},
-			objects: []client.Object{
-				mustNewObject[corev1.Namespace]("testdata/namespace.yaml"),
-			},
-			assertions: func(t *testing.T, r *connect.Response[svcv1alpha1.RefreshProjectConfigResponse], err error) {
-				require.Error(t, err)
-				require.Equal(t, connect.CodeNotFound, connect.CodeOf(err))
-				require.Nil(t, r)
-			},
-		},
-		"existing ProjectConfig": {
-			req: &svcv1alpha1.RefreshProjectConfigRequest{
-				Project: "kargo-demo",
-			},
-			objects: []client.Object{
-				mustNewObject[corev1.Namespace]("testdata/namespace.yaml"),
-				&kargoapi.ProjectConfig{
-					TypeMeta: metav1.TypeMeta{
-						Kind:       "ProjectConfig",
-						APIVersion: kargoapi.GroupVersion.String(),
-					},
-					ObjectMeta: metav1.ObjectMeta{
-						Name:      "kargo-demo",
-						Namespace: "kargo-demo",
-					},
-				},
-			},
-			assertions: func(t *testing.T, r *connect.Response[svcv1alpha1.RefreshProjectConfigResponse], err error) {
-				require.NoError(t, err)
-
-				config := r.Msg.GetProjectConfig()
-				require.Equal(t, "kargo-demo", config.Name)
-
-				annotation := config.GetAnnotations()[kargoapi.AnnotationKeyRefresh]
-				refreshTime, err := time.Parse(time.RFC3339, annotation)
-				require.NoError(t, err)
-
-				// Make sure we set timestamp is close to now
-				// Assume it doesn't take 3 seconds to run this unit test.
-				require.WithinDuration(t, time.Now(), refreshTime, 3*time.Second)
-
-			},
+func Test_server_refreshProjectConfig(t *testing.T) {
+	testProject := &kargoapi.Project{
+		ObjectMeta: metav1.ObjectMeta{Name: "fake-project"},
+	}
+	testConfig := &kargoapi.ProjectConfig{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      testProject.Name,
+			Namespace: testProject.Name,
 		},
 	}
-	for name, ts := range testSets {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-
-			ctx := context.Background()
-
-			client, err := kubernetes.NewClient(
-				ctx,
-				&rest.Config{},
-				kubernetes.ClientOptions{
-					SkipAuthorization: true,
-					NewInternalClient: func(
-						_ context.Context,
-						_ *rest.Config,
-						scheme *runtime.Scheme,
-					) (client.Client, error) {
-						return fake.NewClientBuilder().
-							WithScheme(scheme).
-							WithObjects(ts.objects...).
-							Build(), nil
-					},
+	testRESTEndpoint(
+		t, &config.ServerConfig{},
+		http.MethodPost, "/v1beta1/projects/"+testProject.Name+"/config/refresh",
+		[]restTestCase{
+			{
+				name:          "Project not found",
+				clientBuilder: fake.NewClientBuilder(),
+				assertions: func(t *testing.T, w *httptest.ResponseRecorder, _ client.Client) {
+					require.Equal(t, http.StatusNotFound, w.Code)
 				},
-			)
-			require.NoError(t, err)
+			},
+			{
+				name:          "ProjectConfig not found",
+				clientBuilder: fake.NewClientBuilder().WithObjects(testProject),
+				assertions: func(t *testing.T, w *httptest.ResponseRecorder, _ client.Client) {
+					require.Equal(t, http.StatusNotFound, w.Code)
+				},
+			},
+			{
+				name:          "refreshes ProjectConfig",
+				clientBuilder: fake.NewClientBuilder().WithObjects(testProject, testConfig),
+				assertions: func(t *testing.T, w *httptest.ResponseRecorder, c client.Client) {
+					require.Equal(t, http.StatusOK, w.Code)
 
-			svr := &server{
-				client:                    client,
-				externalValidateProjectFn: validation.ValidateProject,
-			}
-			res, err := svr.RefreshProjectConfig(ctx, connect.NewRequest(ts.req))
-			ts.assertions(t, res, err)
-		})
-	}
+					// Verify the ProjectConfig was refreshed
+					config := &kargoapi.ProjectConfig{}
+					err := c.Get(
+						t.Context(),
+						client.ObjectKeyFromObject(testConfig),
+						config,
+					)
+					require.NoError(t, err)
+					require.NotEmpty(t, config.Annotations[kargoapi.AnnotationKeyRefresh])
+				},
+			},
+		},
+	)
 }

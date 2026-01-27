@@ -8,14 +8,14 @@ This document is a guide to Kargo configuration options that are available to
 operators _at runtime_. These are generally analogs to Project level
 configuration options available to developers.
 
-:::info
-__Not what you were looking for?__
+:::info[Not what you were looking for?]
 
 Most system level configuration options are exercised by operators at the time
 of installation or upgrade. For details, refer to
 [Common Configurations](./20-advanced-installation/30-common-configurations.md)
 and the
 [Kargo Helm Chart's README.md](https://github.com/akuity/kargo/tree/main/charts/kargo).
+
 :::
 
 ## Triggering Artifact Discovery Using Webhooks
@@ -56,9 +56,11 @@ This can be accomplished easily by updating your `ClusterConfig` resource's
 `ClusterConfig` resource, you can create one.
 
 :::note
+
 Every cluster hosting a Kargo control plane is permitted to have at most _one_
 `ClusterConfig` resource. This limit is enforced by requiring all
 `ClusterConfig` resources to be named `cluster`.
+
 :::
 
 A `ClusterConfig` resource's `spec.webhookReceivers` field may define one or
@@ -74,16 +76,29 @@ receiver vary, and are documented on
 [each receiver type's own page](../50-user-guide/60-reference-docs/80-webhook-receivers/index.md).
 
 :::note
+
 Because `ClusterConfig` resources are _cluster-scoped_ resources and Kubernetes
 has no such thing as a "`ClusterSecret`" resource type (i.e. a cluster-scoped
 analog to `Secret`), Kargo will look for the referenced `Secret` in a designated
-namespace. By default, that namespace is `kargo-cluster-secrets`, but can be
+namespace. By default, that namespace is `kargo-system-resources`, but can be
 changed by the operator at the time of installation. (Refer to the
 [Kargo Helm Chart's README.md](https://github.com/akuity/kargo/tree/main/charts/kargo).
 )
+
+:::
+
+:::warning
+
+Prior to `v1.9`, `Secret`s referenced by `ClusterConfig` were contained in the namespace designated by`global.clusterSecretsNamespace`, with a default of `kargo-cluster-secrets`.
+
+Kargo v1.9.0 changed the name of the setting to `global.systemResources.namespace` and its default value to `kargo-system-resources` to better reflect the intent to use the namespace not only for `Secret`s, but for _all_ types of namespaced resources that lack a cluster-scoped analog.
+
+Kargo versions >= v1.9.0 and < v1.12.0 will automatically sync `Secret`s from the namespace specified by `global.clusterSecretsNamespace` to the namespace specified by `global.clusterSecretsNamespace` (if they are different). That migration utility will be removed from v1.12.0, by which time operators who GitOps their `ClusterConfig` will need to have updated their manifests accordingly. Upgrades to v1.12.0 will **fail** if `global.clusterSecretsNamespace` remains defined.
+
 :::
 
 :::info
+
 `Secret`s referenced by a webhook receiver typically serve _two_ purposes.
 
 1. _Often_, some value(s) from the `Secret`'s data map are shared with the
@@ -159,9 +174,11 @@ data:
 ```
 
 :::note
+
 The `kargo.akuity.io/cred-type: generic` label on `Secret`s referenced by
 webhook receivers is not strictly required, but we _strongly_ recommend
 including it.
+
 :::
 
 For each properly configured webhook receiver, Kargo will update the
@@ -198,9 +215,11 @@ Above, you can see the URLs that can be registered with GitHub and GitLab as
 endpoints to receive webhook requests from those platforms.
 
 :::info
+
 For more information about registering these endpoints with specific senders,
 refer to
 [each receiver type's own page](../50-user-guide/60-reference-docs/80-webhook-receivers/index.md).
+
 :::
 
 ### Receivers in Action
@@ -240,7 +259,7 @@ spec:
   # contain the following key:
   # - `apiKey`: The Slack token with permissions to post messages to the desired channel
   secretRef:
-    # The name of the Secret in the cluster secrets namespace
+    # The name of the Secret in the cluster resources namespace
     name: slack-token
   # Configuration specific to Slack
   slack:

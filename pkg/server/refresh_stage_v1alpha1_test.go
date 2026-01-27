@@ -1,117 +1,87 @@
 package server
 
 import (
-	"context"
+	"net/http"
+	"net/http/httptest"
 	"testing"
-	"time"
 
-	"connectrpc.com/connect"
 	"github.com/stretchr/testify/require"
-	corev1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/client-go/rest"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
-	svcv1alpha1 "github.com/akuity/kargo/api/service/v1alpha1"
 	kargoapi "github.com/akuity/kargo/api/v1alpha1"
-	"github.com/akuity/kargo/pkg/server/kubernetes"
-	"github.com/akuity/kargo/pkg/server/validation"
+	"github.com/akuity/kargo/pkg/server/config"
 )
 
-func TestRefreshStage(t *testing.T) {
-	testSets := map[string]struct {
-		req          *svcv1alpha1.RefreshStageRequest
-		errExpected  bool
-		expectedCode connect.Code
-	}{
-		"empty project": {
-			req: &svcv1alpha1.RefreshStageRequest{
-				Project: "",
-				Name:    "",
-			},
-			errExpected:  true,
-			expectedCode: connect.CodeInvalidArgument,
-		},
-		"empty name": {
-			req: &svcv1alpha1.RefreshStageRequest{
-				Project: "kargo-demo",
-				Name:    "",
-			},
-			errExpected:  true,
-			expectedCode: connect.CodeInvalidArgument,
-		},
-		"non-existing project": {
-			req: &svcv1alpha1.RefreshStageRequest{
-				Project: "kargo-x",
-				Name:    "test",
-			},
-			errExpected:  true,
-			expectedCode: connect.CodeNotFound,
-		},
-		"non-existing Stage": {
-			req: &svcv1alpha1.RefreshStageRequest{
-				Project: "non-existing-project",
-				Name:    "test",
-			},
-			errExpected:  true,
-			expectedCode: connect.CodeNotFound,
-		},
-		"existing Stage": {
-			req: &svcv1alpha1.RefreshStageRequest{
-				Project: "kargo-demo",
-				Name:    "test",
-			},
+func Test_server_refreshStage(t *testing.T) {
+	testProject := &kargoapi.Project{
+		ObjectMeta: metav1.ObjectMeta{Name: "fake-project"},
+	}
+	testPromotion := &kargoapi.Promotion{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "fake-promotion",
+			Namespace: testProject.Name,
 		},
 	}
-	for name, ts := range testSets {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-
-			ctx := context.Background()
-
-			client, err := kubernetes.NewClient(
-				ctx,
-				&rest.Config{},
-				kubernetes.ClientOptions{
-					SkipAuthorization: true,
-					NewInternalClient: func(
-						_ context.Context,
-						_ *rest.Config,
-						scheme *runtime.Scheme,
-					) (client.Client, error) {
-						return fake.NewClientBuilder().
-							WithScheme(scheme).
-							WithObjects(
-								mustNewObject[corev1.Namespace]("testdata/namespace.yaml"),
-								mustNewObject[kargoapi.Stage]("testdata/stage.yaml"),
-							).
-							Build(), nil
-					},
+	testStage := &kargoapi.Stage{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "fake-stage",
+			Namespace: testProject.Name,
+		},
+		Status: kargoapi.StageStatus{
+			CurrentPromotion: &kargoapi.PromotionReference{Name: testPromotion.Name},
+		},
+	}
+	testRESTEndpoint(
+		t, &config.ServerConfig{},
+		http.MethodPost, "/v1beta1/projects/"+testProject.Name+"/stages/"+testStage.Name+"/refresh",
+		[]restTestCase{
+			{
+				name:          "Project not found",
+				clientBuilder: fake.NewClientBuilder(),
+				assertions: func(t *testing.T, w *httptest.ResponseRecorder, _ client.Client) {
+					require.Equal(t, http.StatusNotFound, w.Code)
 				},
-			)
-			require.NoError(t, err)
+			},
+			{
+				name:          "Stage not found",
+				clientBuilder: fake.NewClientBuilder().WithObjects(testProject),
+				assertions: func(t *testing.T, w *httptest.ResponseRecorder, _ client.Client) {
+					require.Equal(t, http.StatusNotFound, w.Code)
+				},
+			},
+			{
+				name: "refreshes Stage",
+				clientBuilder: fake.NewClientBuilder().WithObjects(
+					testProject,
+					testStage,
+					testPromotion,
+				),
+				assertions: func(t *testing.T, w *httptest.ResponseRecorder, c client.Client) {
+					require.Equal(t, http.StatusOK, w.Code)
 
-			svr := &server{
-				client: client,
-			}
-			svr.externalValidateProjectFn = validation.ValidateProject
-			res, err := svr.RefreshStage(ctx, connect.NewRequest(ts.req))
-			if ts.errExpected {
-				require.Error(t, err)
-				require.Equal(t, ts.expectedCode, connect.CodeOf(err))
-				return
-			}
-			require.NoError(t, err)
-			stage := res.Msg.GetStage()
-			annotation := stage.GetAnnotations()[kargoapi.AnnotationKeyRefresh]
-			refreshTime, err := time.Parse(time.RFC3339, annotation)
-			require.NoError(t, err)
-			// Make sure we set timestamp is close to now
-			// Assume it doesn't take 3 seconds to run this unit test.
-			require.WithinDuration(t, time.Now(), refreshTime, 3*time.Second)
-			require.Equal(t, ts.req.GetProject(), stage.Namespace)
-			require.Equal(t, ts.req.GetName(), stage.Name)
-		})
-	}
+					// Verify the Stage was refreshed
+					stage := &kargoapi.Stage{}
+					err := c.Get(
+						t.Context(),
+						client.ObjectKeyFromObject(testStage),
+						stage,
+					)
+					require.NoError(t, err)
+					require.NotEmpty(t, stage.Annotations[kargoapi.AnnotationKeyRefresh])
+
+					// Verify the current Promotion was also refreshed
+					promotion := &kargoapi.Promotion{}
+					err = c.Get(
+						t.Context(),
+						client.ObjectKeyFromObject(testPromotion),
+						promotion,
+					)
+					require.NoError(t, err)
+					require.NotEmpty(t, promotion.Annotations[kargoapi.AnnotationKeyRefresh])
+				},
+			},
+		},
+	)
 }

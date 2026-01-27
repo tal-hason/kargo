@@ -22,6 +22,7 @@ commonly preceded by a [`git-clear` step](git-clear.md) and followed by
 | `useReleaseName` | `boolean` | N | Whether to use the release name in the output path (instead of the chart name). This is `false` by default, and only has an effect when `outPath` is set to a directory. |
 | `namespace` | `string` | N | Optional namespace to use when rendering the manifests. This is commonly omitted. GitOps agents such as Argo CD will generally ensure the installation of manifests into the namespace specified by their own configuration. |
 | `valuesFiles` | `[]string` | N | Helm values files (apart from the chart's default `values.yaml`) to be used when rendering the manifests.  |
+| `ignoreMissingValueFiles` | `boolean` | N | Whether to skip value files that do not exist instead of returning an error. Useful for optional stage-specific overlays. This is `false` by default. |
 | `buildDependencies` | `bool` | N | Whether to build dependencies before rendering the manifests. If no Chart.lock file is present, the dependencies will be built from the Chart.yaml file (and may be updated). This is `false` by default. |
 | `includeCRDs` | `boolean` | N | Whether to include CRDs in the rendered manifests. This is `false` by default. |
 | `disableHooks` | `boolean` | N | Whether to disable hooks in the rendered manifests. This is `false` by default. |
@@ -31,6 +32,7 @@ commonly preceded by a [`git-clear` step](git-clear.md) and followed by
 | `setValues` | `[]object` | N | Allows for amending chart configuration inline as one would with the `helm template` command's `--set` flag. |
 | `setValues[].key` | `string` | N | The key whose value should be set. For nested values, use dots to delimit key parts. e.g. `image.tag`. |
 | `setValues[].value` | `string` | N | The new value for the key. |
+| `setValues[].literal` | `boolean` | N | Whether to force the value to be treated as a literal string. When true, uses `--set-literal` instead of `--set`. This is `false` by default. |
 
 ## Examples
 

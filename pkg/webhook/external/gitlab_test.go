@@ -22,7 +22,8 @@ const gitlabPushEventRequestBody = `
 {
 	"ref": "refs/heads/main",
 	"repository":{
-		"git_http_url": "https://gitlab.com/example/repo"
+		"git_http_url": "https://gitlab.com/example/repo.git",
+		"git_ssh_url": "git@gitlab.com:example/repo.git"
 	}
 }`
 
@@ -30,7 +31,8 @@ const gitlabTagPushEventRequestBody = `
 {
 	"ref": "refs/tags/v1.0.0",
 	"repository":{
-		"git_http_url": "https://gitlab.com/example/repo"
+		"git_http_url": "https://gitlab.com/example/repo.git",
+		"git_ssh_url": "git@gitlab.com:example/repo.git"
 	}
 }`
 
@@ -120,7 +122,7 @@ func TestGitLabHandler(t *testing.T) {
 						Name:      "fake-warehouse",
 					},
 					Spec: kargoapi.WarehouseSpec{
-						Subscriptions: []kargoapi.RepoSubscription{{
+						InternalSubscriptions: []kargoapi.RepoSubscription{{
 							Git: &kargoapi.GitSubscription{
 								RepoURL: "https://gitlab.com/example/repo",
 								Branch:  "not-main", // This constraint won't be met
@@ -152,7 +154,7 @@ func TestGitLabHandler(t *testing.T) {
 			},
 		},
 		{
-			name:       "warehouse refreshed (push event)",
+			name:       "warehouse refreshed (push event, https)",
 			secretData: testSecretData,
 			client: fake.NewClientBuilder().WithScheme(testScheme).WithObjects(
 				&kargoapi.Warehouse{
@@ -161,9 +163,50 @@ func TestGitLabHandler(t *testing.T) {
 						Name:      "fake-warehouse",
 					},
 					Spec: kargoapi.WarehouseSpec{
-						Subscriptions: []kargoapi.RepoSubscription{{
+						InternalSubscriptions: []kargoapi.RepoSubscription{{
 							Git: &kargoapi.GitSubscription{
 								RepoURL: "https://gitlab.com/example/repo",
+								Branch:  "main",
+							},
+						}},
+					},
+				},
+			).WithIndex(
+				&kargoapi.Warehouse{},
+				indexer.WarehousesBySubscribedURLsField,
+				indexer.WarehousesBySubscribedURLs,
+			).Build(),
+			req: func() *http.Request {
+				bodyBuf := bytes.NewBuffer([]byte(gitlabPushEventRequestBody))
+				req := httptest.NewRequest(
+					http.MethodPost,
+					testURL,
+					bodyBuf,
+				)
+				req.Header.Set(gitlabTokenHeader, testToken)
+				req.Header.Set(gitlabEventHeader, string(gl.EventTypePush))
+				return req
+			},
+			assertions: func(t *testing.T, rr *httptest.ResponseRecorder) {
+				require.Equal(t, http.StatusOK, rr.Code)
+				require.JSONEq(
+					t, `{"msg":"refreshed 1 warehouse(s)"}`, rr.Body.String(),
+				)
+			},
+		},
+		{
+			name:       "warehouse refreshed (push event, ssh)",
+			secretData: testSecretData,
+			client: fake.NewClientBuilder().WithScheme(testScheme).WithObjects(
+				&kargoapi.Warehouse{
+					ObjectMeta: metav1.ObjectMeta{
+						Namespace: testProjectName,
+						Name:      "fake-warehouse",
+					},
+					Spec: kargoapi.WarehouseSpec{
+						InternalSubscriptions: []kargoapi.RepoSubscription{{
+							Git: &kargoapi.GitSubscription{
+								RepoURL: "git@gitlab.com:example/repo",
 								Branch:  "main",
 							},
 						}},
@@ -205,7 +248,7 @@ func TestGitLabHandler(t *testing.T) {
 						Name:      "fake-warehouse",
 					},
 					Spec: kargoapi.WarehouseSpec{
-						Subscriptions: []kargoapi.RepoSubscription{{
+						InternalSubscriptions: []kargoapi.RepoSubscription{{
 							Git: &kargoapi.GitSubscription{
 								RepoURL:                 "https://gitlab.com/example/repo",
 								CommitSelectionStrategy: kargoapi.CommitSelectionStrategySemVer,
@@ -238,7 +281,7 @@ func TestGitLabHandler(t *testing.T) {
 			},
 		},
 		{
-			name:       "warehouse refreshed (tag event)",
+			name:       "warehouse refreshed (tag event, https)",
 			secretData: testSecretData,
 			client: fake.NewClientBuilder().WithScheme(testScheme).WithObjects(
 				&kargoapi.Warehouse{
@@ -247,9 +290,51 @@ func TestGitLabHandler(t *testing.T) {
 						Name:      "fake-warehouse",
 					},
 					Spec: kargoapi.WarehouseSpec{
-						Subscriptions: []kargoapi.RepoSubscription{{
+						InternalSubscriptions: []kargoapi.RepoSubscription{{
 							Git: &kargoapi.GitSubscription{
 								RepoURL:                 "https://gitlab.com/example/repo",
+								CommitSelectionStrategy: kargoapi.CommitSelectionStrategySemVer,
+								SemverConstraint:        "^1.0.0",
+							},
+						}},
+					},
+				},
+			).WithIndex(
+				&kargoapi.Warehouse{},
+				indexer.WarehousesBySubscribedURLsField,
+				indexer.WarehousesBySubscribedURLs,
+			).Build(),
+			req: func() *http.Request {
+				bodyBuf := bytes.NewBuffer([]byte(gitlabTagPushEventRequestBody))
+				req := httptest.NewRequest(
+					http.MethodPost,
+					testURL,
+					bodyBuf,
+				)
+				req.Header.Set(gitlabTokenHeader, testToken)
+				req.Header.Set(gitlabEventHeader, string(gl.EventTypeTagPush))
+				return req
+			},
+			assertions: func(t *testing.T, rr *httptest.ResponseRecorder) {
+				require.Equal(t, http.StatusOK, rr.Code)
+				require.JSONEq(
+					t, `{"msg":"refreshed 1 warehouse(s)"}`, rr.Body.String(),
+				)
+			},
+		},
+		{
+			name:       "warehouse refreshed (tag event, ssh)",
+			secretData: testSecretData,
+			client: fake.NewClientBuilder().WithScheme(testScheme).WithObjects(
+				&kargoapi.Warehouse{
+					ObjectMeta: metav1.ObjectMeta{
+						Namespace: testProjectName,
+						Name:      "fake-warehouse",
+					},
+					Spec: kargoapi.WarehouseSpec{
+						InternalSubscriptions: []kargoapi.RepoSubscription{{
+							Git: &kargoapi.GitSubscription{
+								RepoURL:                 "git@gitlab.com:example/repo",
 								CommitSelectionStrategy: kargoapi.CommitSelectionStrategySemVer,
 								SemverConstraint:        "^1.0.0",
 							},

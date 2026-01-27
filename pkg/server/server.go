@@ -46,11 +46,10 @@ var (
 )
 
 type server struct {
-	cfg               config.ServerConfig
-	client            kubernetes.Client
-	rolesDB           rbac.RolesDatabase
-	serviceAccountsDB rbac.ServiceAccountsDatabase
-	sender            event.Sender
+	cfg     config.ServerConfig
+	client  kubernetes.Client
+	rolesDB rbac.RolesDatabase
+	sender  event.Sender
 
 	// The following behaviors are overridable for testing purposes:
 
@@ -167,15 +166,13 @@ func NewServer(
 	cfg config.ServerConfig,
 	kubeClient kubernetes.Client,
 	rolesDB rbac.RolesDatabase,
-	serviceAccountsDB rbac.ServiceAccountsDatabase,
 	sender event.Sender,
 ) Server {
 	s := &server{
-		cfg:               cfg,
-		client:            kubeClient,
-		rolesDB:           rolesDB,
-		serviceAccountsDB: serviceAccountsDB,
-		sender:            sender,
+		cfg:     cfg,
+		client:  kubeClient,
+		rolesDB: rolesDB,
+		sender:  sender,
 	}
 
 	s.validateProjectExistsFn = s.validateProjectExists
@@ -210,6 +207,11 @@ func (s *server) Serve(ctx context.Context, l net.Listener) error {
 	mux.Handle(grpchealth.NewHandler(NewHealthChecker(), opts))
 	path, svcHandler := svcv1alpha1connect.NewKargoServiceHandler(s, opts)
 	mux.Handle(path, svcHandler)
+
+	// Add Gin REST router
+	ginRouter := s.setupRESTRouter(ctx)
+	mux.Handle("/v1beta1/", ginRouter)
+
 	dashboardHandler, err := newDashboardRequestHandler()
 	if err != nil {
 		return fmt.Errorf("error initializing dashboard handler: %w", err)

@@ -1,41 +1,41 @@
 package server
 
 import (
-	"context"
+	"net/http"
 
-	"connectrpc.com/connect"
-	"sigs.k8s.io/controller-runtime/pkg/client"
+	"github.com/gin-gonic/gin"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	svcv1alpha1 "github.com/akuity/kargo/api/service/v1alpha1"
+	kargoapi "github.com/akuity/kargo/api/v1alpha1"
 	"github.com/akuity/kargo/pkg/api"
 )
 
-func (s *server) RefreshWarehouse(
-	ctx context.Context,
-	req *connect.Request[svcv1alpha1.RefreshWarehouseRequest],
-) (*connect.Response[svcv1alpha1.RefreshWarehouseResponse], error) {
-	project := req.Msg.GetProject()
-	if err := validateFieldNotEmpty("project", project); err != nil {
-		return nil, err
+// @id RefreshWarehouse
+// @Summary Refresh a Warehouse
+// @Description Refresh a Warehouse resource in a project's namespace.
+// @Description Refreshing enqueues the resource for reconciliation by its
+// @Description corresponding controller.
+// @Tags Core, Project-Level
+// @Security BearerAuth
+// @Produce json
+// @Param project path string true "Project name"
+// @Param warehouse path string true "Warehouse name"
+// @Success 200 "Success"
+// @Router /v1beta1/projects/{project}/warehouses/{warehouse}/refresh [post]
+func (s *server) refreshWarehouse(c *gin.Context) {
+	ctx := c.Request.Context()
+
+	project := c.Param("project")
+	warehouseName := c.Param("warehouse")
+
+	obj := &kargoapi.Warehouse{
+		ObjectMeta: metav1.ObjectMeta{Name: warehouseName, Namespace: project},
 	}
 
-	name := req.Msg.GetName()
-	if err := validateFieldNotEmpty("name", name); err != nil {
-		return nil, err
+	if err := api.RefreshObject(ctx, s.client.InternalClient(), obj); err != nil {
+		_ = c.Error(err)
+		return
 	}
 
-	if err := s.validateProjectExists(ctx, project); err != nil {
-		return nil, err
-	}
-
-	warehouse, err := api.RefreshWarehouse(ctx, s.client.InternalClient(), client.ObjectKey{
-		Namespace: project,
-		Name:      name,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return connect.NewResponse(&svcv1alpha1.RefreshWarehouseResponse{
-		Warehouse: warehouse,
-	}), nil
+	c.Status(http.StatusOK)
 }

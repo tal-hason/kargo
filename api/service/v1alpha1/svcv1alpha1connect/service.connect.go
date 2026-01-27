@@ -55,6 +55,9 @@ const (
 	// KargoServiceDeleteResourceProcedure is the fully-qualified name of the KargoService's
 	// DeleteResource RPC.
 	KargoServiceDeleteResourceProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteResource"
+	// KargoServiceRefreshResourceProcedure is the fully-qualified name of the KargoService's
+	// RefreshResource RPC.
+	KargoServiceRefreshResourceProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/RefreshResource"
 	// KargoServiceListStagesProcedure is the fully-qualified name of the KargoService's ListStages RPC.
 	KargoServiceListStagesProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListStages"
 	// KargoServiceListImagesProcedure is the fully-qualified name of the KargoService's ListImages RPC.
@@ -67,9 +70,6 @@ const (
 	// KargoServiceDeleteStageProcedure is the fully-qualified name of the KargoService's DeleteStage
 	// RPC.
 	KargoServiceDeleteStageProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteStage"
-	// KargoServiceRefreshStageProcedure is the fully-qualified name of the KargoService's RefreshStage
-	// RPC.
-	KargoServiceRefreshStageProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/RefreshStage"
 	// KargoServiceGetClusterConfigProcedure is the fully-qualified name of the KargoService's
 	// GetClusterConfig RPC.
 	KargoServiceGetClusterConfigProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/GetClusterConfig"
@@ -79,9 +79,6 @@ const (
 	// KargoServiceWatchClusterConfigProcedure is the fully-qualified name of the KargoService's
 	// WatchClusterConfig RPC.
 	KargoServiceWatchClusterConfigProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/WatchClusterConfig"
-	// KargoServiceRefreshClusterConfigProcedure is the fully-qualified name of the KargoService's
-	// RefreshClusterConfig RPC.
-	KargoServiceRefreshClusterConfigProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/RefreshClusterConfig"
 	// KargoServiceListPromotionsProcedure is the fully-qualified name of the KargoService's
 	// ListPromotions RPC.
 	KargoServiceListPromotionsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListPromotions"
@@ -114,9 +111,6 @@ const (
 	// KargoServiceWatchProjectConfigProcedure is the fully-qualified name of the KargoService's
 	// WatchProjectConfig RPC.
 	KargoServiceWatchProjectConfigProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/WatchProjectConfig"
-	// KargoServiceRefreshProjectConfigProcedure is the fully-qualified name of the KargoService's
-	// RefreshProjectConfig RPC.
-	KargoServiceRefreshProjectConfigProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/RefreshProjectConfig"
 	// KargoServiceApproveFreightProcedure is the fully-qualified name of the KargoService's
 	// ApproveFreight RPC.
 	KargoServiceApproveFreightProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ApproveFreight"
@@ -157,42 +151,48 @@ const (
 	// KargoServiceDeleteWarehouseProcedure is the fully-qualified name of the KargoService's
 	// DeleteWarehouse RPC.
 	KargoServiceDeleteWarehouseProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteWarehouse"
-	// KargoServiceRefreshWarehouseProcedure is the fully-qualified name of the KargoService's
-	// RefreshWarehouse RPC.
-	KargoServiceRefreshWarehouseProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/RefreshWarehouse"
-	// KargoServiceCreateCredentialsProcedure is the fully-qualified name of the KargoService's
-	// CreateCredentials RPC.
-	KargoServiceCreateCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/CreateCredentials"
-	// KargoServiceDeleteCredentialsProcedure is the fully-qualified name of the KargoService's
-	// DeleteCredentials RPC.
-	KargoServiceDeleteCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteCredentials"
-	// KargoServiceGetCredentialsProcedure is the fully-qualified name of the KargoService's
-	// GetCredentials RPC.
-	KargoServiceGetCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/GetCredentials"
-	// KargoServiceListCredentialsProcedure is the fully-qualified name of the KargoService's
-	// ListCredentials RPC.
-	KargoServiceListCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListCredentials"
-	// KargoServiceUpdateCredentialsProcedure is the fully-qualified name of the KargoService's
-	// UpdateCredentials RPC.
-	KargoServiceUpdateCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/UpdateCredentials"
-	// KargoServiceListProjectSecretsProcedure is the fully-qualified name of the KargoService's
-	// ListProjectSecrets RPC.
-	KargoServiceListProjectSecretsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListProjectSecrets"
-	// KargoServiceCreateProjectSecretProcedure is the fully-qualified name of the KargoService's
-	// CreateProjectSecret RPC.
-	KargoServiceCreateProjectSecretProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/CreateProjectSecret"
-	// KargoServiceUpdateProjectSecretProcedure is the fully-qualified name of the KargoService's
-	// UpdateProjectSecret RPC.
-	KargoServiceUpdateProjectSecretProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/UpdateProjectSecret"
-	// KargoServiceDeleteProjectSecretProcedure is the fully-qualified name of the KargoService's
-	// DeleteProjectSecret RPC.
-	KargoServiceDeleteProjectSecretProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteProjectSecret"
+	// KargoServiceCreateRepoCredentialsProcedure is the fully-qualified name of the KargoService's
+	// CreateRepoCredentials RPC.
+	KargoServiceCreateRepoCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/CreateRepoCredentials"
+	// KargoServiceDeleteRepoCredentialsProcedure is the fully-qualified name of the KargoService's
+	// DeleteRepoCredentials RPC.
+	KargoServiceDeleteRepoCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteRepoCredentials"
+	// KargoServiceGetRepoCredentialsProcedure is the fully-qualified name of the KargoService's
+	// GetRepoCredentials RPC.
+	KargoServiceGetRepoCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/GetRepoCredentials"
+	// KargoServiceListRepoCredentialsProcedure is the fully-qualified name of the KargoService's
+	// ListRepoCredentials RPC.
+	KargoServiceListRepoCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListRepoCredentials"
+	// KargoServiceUpdateRepoCredentialsProcedure is the fully-qualified name of the KargoService's
+	// UpdateRepoCredentials RPC.
+	KargoServiceUpdateRepoCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/UpdateRepoCredentials"
+	// KargoServiceListGenericCredentialsProcedure is the fully-qualified name of the KargoService's
+	// ListGenericCredentials RPC.
+	KargoServiceListGenericCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListGenericCredentials"
+	// KargoServiceCreateGenericCredentialsProcedure is the fully-qualified name of the KargoService's
+	// CreateGenericCredentials RPC.
+	KargoServiceCreateGenericCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/CreateGenericCredentials"
+	// KargoServiceUpdateGenericCredentialsProcedure is the fully-qualified name of the KargoService's
+	// UpdateGenericCredentials RPC.
+	KargoServiceUpdateGenericCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/UpdateGenericCredentials"
+	// KargoServiceDeleteGenericCredentialsProcedure is the fully-qualified name of the KargoService's
+	// DeleteGenericCredentials RPC.
+	KargoServiceDeleteGenericCredentialsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteGenericCredentials"
+	// KargoServiceCreateConfigMapProcedure is the fully-qualified name of the KargoService's
+	// CreateConfigMap RPC.
+	KargoServiceCreateConfigMapProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/CreateConfigMap"
+	// KargoServiceDeleteConfigMapProcedure is the fully-qualified name of the KargoService's
+	// DeleteConfigMap RPC.
+	KargoServiceDeleteConfigMapProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteConfigMap"
 	// KargoServiceListConfigMapsProcedure is the fully-qualified name of the KargoService's
 	// ListConfigMaps RPC.
 	KargoServiceListConfigMapsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListConfigMaps"
 	// KargoServiceGetConfigMapProcedure is the fully-qualified name of the KargoService's GetConfigMap
 	// RPC.
 	KargoServiceGetConfigMapProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/GetConfigMap"
+	// KargoServiceUpdateConfigMapProcedure is the fully-qualified name of the KargoService's
+	// UpdateConfigMap RPC.
+	KargoServiceUpdateConfigMapProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/UpdateConfigMap"
 	// KargoServiceListAnalysisTemplatesProcedure is the fully-qualified name of the KargoService's
 	// ListAnalysisTemplates RPC.
 	KargoServiceListAnalysisTemplatesProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListAnalysisTemplates"
@@ -246,42 +246,18 @@ const (
 	KargoServiceRevokeProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/Revoke"
 	// KargoServiceUpdateRoleProcedure is the fully-qualified name of the KargoService's UpdateRole RPC.
 	KargoServiceUpdateRoleProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/UpdateRole"
-	// KargoServiceCreateServiceAccountProcedure is the fully-qualified name of the KargoService's
-	// CreateServiceAccount RPC.
-	KargoServiceCreateServiceAccountProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/CreateServiceAccount"
-	// KargoServiceDeleteServiceAccountProcedure is the fully-qualified name of the KargoService's
-	// DeleteServiceAccount RPC.
-	KargoServiceDeleteServiceAccountProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteServiceAccount"
-	// KargoServiceGetServiceAccountProcedure is the fully-qualified name of the KargoService's
-	// GetServiceAccount RPC.
-	KargoServiceGetServiceAccountProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/GetServiceAccount"
-	// KargoServiceListServiceAccountsProcedure is the fully-qualified name of the KargoService's
-	// ListServiceAccounts RPC.
-	KargoServiceListServiceAccountsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListServiceAccounts"
-	// KargoServiceCreateServiceAccountTokenProcedure is the fully-qualified name of the KargoService's
-	// CreateServiceAccountToken RPC.
-	KargoServiceCreateServiceAccountTokenProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/CreateServiceAccountToken"
-	// KargoServiceDeleteServiceAccountTokenProcedure is the fully-qualified name of the KargoService's
-	// DeleteServiceAccountToken RPC.
-	KargoServiceDeleteServiceAccountTokenProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteServiceAccountToken"
-	// KargoServiceGetServiceAccountTokenProcedure is the fully-qualified name of the KargoService's
-	// GetServiceAccountToken RPC.
-	KargoServiceGetServiceAccountTokenProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/GetServiceAccountToken"
-	// KargoServiceListServiceAccountTokensProcedure is the fully-qualified name of the KargoService's
-	// ListServiceAccountTokens RPC.
-	KargoServiceListServiceAccountTokensProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListServiceAccountTokens"
-	// KargoServiceListClusterSecretsProcedure is the fully-qualified name of the KargoService's
-	// ListClusterSecrets RPC.
-	KargoServiceListClusterSecretsProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListClusterSecrets"
-	// KargoServiceCreateClusterSecretProcedure is the fully-qualified name of the KargoService's
-	// CreateClusterSecret RPC.
-	KargoServiceCreateClusterSecretProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/CreateClusterSecret"
-	// KargoServiceUpdateClusterSecretProcedure is the fully-qualified name of the KargoService's
-	// UpdateClusterSecret RPC.
-	KargoServiceUpdateClusterSecretProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/UpdateClusterSecret"
-	// KargoServiceDeleteClusterSecretProcedure is the fully-qualified name of the KargoService's
-	// DeleteClusterSecret RPC.
-	KargoServiceDeleteClusterSecretProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteClusterSecret"
+	// KargoServiceCreateAPITokenProcedure is the fully-qualified name of the KargoService's
+	// CreateAPIToken RPC.
+	KargoServiceCreateAPITokenProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/CreateAPIToken"
+	// KargoServiceDeleteAPITokenProcedure is the fully-qualified name of the KargoService's
+	// DeleteAPIToken RPC.
+	KargoServiceDeleteAPITokenProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/DeleteAPIToken"
+	// KargoServiceGetAPITokenProcedure is the fully-qualified name of the KargoService's GetAPIToken
+	// RPC.
+	KargoServiceGetAPITokenProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/GetAPIToken"
+	// KargoServiceListAPITokensProcedure is the fully-qualified name of the KargoService's
+	// ListAPITokens RPC.
+	KargoServiceListAPITokensProcedure = "/akuity.io.kargo.service.v1alpha1.KargoService/ListAPITokens"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
@@ -295,16 +271,15 @@ var (
 	kargoServiceCreateOrUpdateResourceMethodDescriptor        = kargoServiceServiceDescriptor.Methods().ByName("CreateOrUpdateResource")
 	kargoServiceUpdateResourceMethodDescriptor                = kargoServiceServiceDescriptor.Methods().ByName("UpdateResource")
 	kargoServiceDeleteResourceMethodDescriptor                = kargoServiceServiceDescriptor.Methods().ByName("DeleteResource")
+	kargoServiceRefreshResourceMethodDescriptor               = kargoServiceServiceDescriptor.Methods().ByName("RefreshResource")
 	kargoServiceListStagesMethodDescriptor                    = kargoServiceServiceDescriptor.Methods().ByName("ListStages")
 	kargoServiceListImagesMethodDescriptor                    = kargoServiceServiceDescriptor.Methods().ByName("ListImages")
 	kargoServiceGetStageMethodDescriptor                      = kargoServiceServiceDescriptor.Methods().ByName("GetStage")
 	kargoServiceWatchStagesMethodDescriptor                   = kargoServiceServiceDescriptor.Methods().ByName("WatchStages")
 	kargoServiceDeleteStageMethodDescriptor                   = kargoServiceServiceDescriptor.Methods().ByName("DeleteStage")
-	kargoServiceRefreshStageMethodDescriptor                  = kargoServiceServiceDescriptor.Methods().ByName("RefreshStage")
 	kargoServiceGetClusterConfigMethodDescriptor              = kargoServiceServiceDescriptor.Methods().ByName("GetClusterConfig")
 	kargoServiceDeleteClusterConfigMethodDescriptor           = kargoServiceServiceDescriptor.Methods().ByName("DeleteClusterConfig")
 	kargoServiceWatchClusterConfigMethodDescriptor            = kargoServiceServiceDescriptor.Methods().ByName("WatchClusterConfig")
-	kargoServiceRefreshClusterConfigMethodDescriptor          = kargoServiceServiceDescriptor.Methods().ByName("RefreshClusterConfig")
 	kargoServiceListPromotionsMethodDescriptor                = kargoServiceServiceDescriptor.Methods().ByName("ListPromotions")
 	kargoServiceWatchPromotionsMethodDescriptor               = kargoServiceServiceDescriptor.Methods().ByName("WatchPromotions")
 	kargoServiceGetPromotionMethodDescriptor                  = kargoServiceServiceDescriptor.Methods().ByName("GetPromotion")
@@ -316,7 +291,6 @@ var (
 	kargoServiceGetProjectConfigMethodDescriptor              = kargoServiceServiceDescriptor.Methods().ByName("GetProjectConfig")
 	kargoServiceDeleteProjectConfigMethodDescriptor           = kargoServiceServiceDescriptor.Methods().ByName("DeleteProjectConfig")
 	kargoServiceWatchProjectConfigMethodDescriptor            = kargoServiceServiceDescriptor.Methods().ByName("WatchProjectConfig")
-	kargoServiceRefreshProjectConfigMethodDescriptor          = kargoServiceServiceDescriptor.Methods().ByName("RefreshProjectConfig")
 	kargoServiceApproveFreightMethodDescriptor                = kargoServiceServiceDescriptor.Methods().ByName("ApproveFreight")
 	kargoServiceDeleteFreightMethodDescriptor                 = kargoServiceServiceDescriptor.Methods().ByName("DeleteFreight")
 	kargoServiceGetFreightMethodDescriptor                    = kargoServiceServiceDescriptor.Methods().ByName("GetFreight")
@@ -331,18 +305,20 @@ var (
 	kargoServiceGetWarehouseMethodDescriptor                  = kargoServiceServiceDescriptor.Methods().ByName("GetWarehouse")
 	kargoServiceWatchWarehousesMethodDescriptor               = kargoServiceServiceDescriptor.Methods().ByName("WatchWarehouses")
 	kargoServiceDeleteWarehouseMethodDescriptor               = kargoServiceServiceDescriptor.Methods().ByName("DeleteWarehouse")
-	kargoServiceRefreshWarehouseMethodDescriptor              = kargoServiceServiceDescriptor.Methods().ByName("RefreshWarehouse")
-	kargoServiceCreateCredentialsMethodDescriptor             = kargoServiceServiceDescriptor.Methods().ByName("CreateCredentials")
-	kargoServiceDeleteCredentialsMethodDescriptor             = kargoServiceServiceDescriptor.Methods().ByName("DeleteCredentials")
-	kargoServiceGetCredentialsMethodDescriptor                = kargoServiceServiceDescriptor.Methods().ByName("GetCredentials")
-	kargoServiceListCredentialsMethodDescriptor               = kargoServiceServiceDescriptor.Methods().ByName("ListCredentials")
-	kargoServiceUpdateCredentialsMethodDescriptor             = kargoServiceServiceDescriptor.Methods().ByName("UpdateCredentials")
-	kargoServiceListProjectSecretsMethodDescriptor            = kargoServiceServiceDescriptor.Methods().ByName("ListProjectSecrets")
-	kargoServiceCreateProjectSecretMethodDescriptor           = kargoServiceServiceDescriptor.Methods().ByName("CreateProjectSecret")
-	kargoServiceUpdateProjectSecretMethodDescriptor           = kargoServiceServiceDescriptor.Methods().ByName("UpdateProjectSecret")
-	kargoServiceDeleteProjectSecretMethodDescriptor           = kargoServiceServiceDescriptor.Methods().ByName("DeleteProjectSecret")
+	kargoServiceCreateRepoCredentialsMethodDescriptor         = kargoServiceServiceDescriptor.Methods().ByName("CreateRepoCredentials")
+	kargoServiceDeleteRepoCredentialsMethodDescriptor         = kargoServiceServiceDescriptor.Methods().ByName("DeleteRepoCredentials")
+	kargoServiceGetRepoCredentialsMethodDescriptor            = kargoServiceServiceDescriptor.Methods().ByName("GetRepoCredentials")
+	kargoServiceListRepoCredentialsMethodDescriptor           = kargoServiceServiceDescriptor.Methods().ByName("ListRepoCredentials")
+	kargoServiceUpdateRepoCredentialsMethodDescriptor         = kargoServiceServiceDescriptor.Methods().ByName("UpdateRepoCredentials")
+	kargoServiceListGenericCredentialsMethodDescriptor        = kargoServiceServiceDescriptor.Methods().ByName("ListGenericCredentials")
+	kargoServiceCreateGenericCredentialsMethodDescriptor      = kargoServiceServiceDescriptor.Methods().ByName("CreateGenericCredentials")
+	kargoServiceUpdateGenericCredentialsMethodDescriptor      = kargoServiceServiceDescriptor.Methods().ByName("UpdateGenericCredentials")
+	kargoServiceDeleteGenericCredentialsMethodDescriptor      = kargoServiceServiceDescriptor.Methods().ByName("DeleteGenericCredentials")
+	kargoServiceCreateConfigMapMethodDescriptor               = kargoServiceServiceDescriptor.Methods().ByName("CreateConfigMap")
+	kargoServiceDeleteConfigMapMethodDescriptor               = kargoServiceServiceDescriptor.Methods().ByName("DeleteConfigMap")
 	kargoServiceListConfigMapsMethodDescriptor                = kargoServiceServiceDescriptor.Methods().ByName("ListConfigMaps")
 	kargoServiceGetConfigMapMethodDescriptor                  = kargoServiceServiceDescriptor.Methods().ByName("GetConfigMap")
+	kargoServiceUpdateConfigMapMethodDescriptor               = kargoServiceServiceDescriptor.Methods().ByName("UpdateConfigMap")
 	kargoServiceListAnalysisTemplatesMethodDescriptor         = kargoServiceServiceDescriptor.Methods().ByName("ListAnalysisTemplates")
 	kargoServiceGetAnalysisTemplateMethodDescriptor           = kargoServiceServiceDescriptor.Methods().ByName("GetAnalysisTemplate")
 	kargoServiceDeleteAnalysisTemplateMethodDescriptor        = kargoServiceServiceDescriptor.Methods().ByName("DeleteAnalysisTemplate")
@@ -363,18 +339,10 @@ var (
 	kargoServiceListRolesMethodDescriptor                     = kargoServiceServiceDescriptor.Methods().ByName("ListRoles")
 	kargoServiceRevokeMethodDescriptor                        = kargoServiceServiceDescriptor.Methods().ByName("Revoke")
 	kargoServiceUpdateRoleMethodDescriptor                    = kargoServiceServiceDescriptor.Methods().ByName("UpdateRole")
-	kargoServiceCreateServiceAccountMethodDescriptor          = kargoServiceServiceDescriptor.Methods().ByName("CreateServiceAccount")
-	kargoServiceDeleteServiceAccountMethodDescriptor          = kargoServiceServiceDescriptor.Methods().ByName("DeleteServiceAccount")
-	kargoServiceGetServiceAccountMethodDescriptor             = kargoServiceServiceDescriptor.Methods().ByName("GetServiceAccount")
-	kargoServiceListServiceAccountsMethodDescriptor           = kargoServiceServiceDescriptor.Methods().ByName("ListServiceAccounts")
-	kargoServiceCreateServiceAccountTokenMethodDescriptor     = kargoServiceServiceDescriptor.Methods().ByName("CreateServiceAccountToken")
-	kargoServiceDeleteServiceAccountTokenMethodDescriptor     = kargoServiceServiceDescriptor.Methods().ByName("DeleteServiceAccountToken")
-	kargoServiceGetServiceAccountTokenMethodDescriptor        = kargoServiceServiceDescriptor.Methods().ByName("GetServiceAccountToken")
-	kargoServiceListServiceAccountTokensMethodDescriptor      = kargoServiceServiceDescriptor.Methods().ByName("ListServiceAccountTokens")
-	kargoServiceListClusterSecretsMethodDescriptor            = kargoServiceServiceDescriptor.Methods().ByName("ListClusterSecrets")
-	kargoServiceCreateClusterSecretMethodDescriptor           = kargoServiceServiceDescriptor.Methods().ByName("CreateClusterSecret")
-	kargoServiceUpdateClusterSecretMethodDescriptor           = kargoServiceServiceDescriptor.Methods().ByName("UpdateClusterSecret")
-	kargoServiceDeleteClusterSecretMethodDescriptor           = kargoServiceServiceDescriptor.Methods().ByName("DeleteClusterSecret")
+	kargoServiceCreateAPITokenMethodDescriptor                = kargoServiceServiceDescriptor.Methods().ByName("CreateAPIToken")
+	kargoServiceDeleteAPITokenMethodDescriptor                = kargoServiceServiceDescriptor.Methods().ByName("DeleteAPIToken")
+	kargoServiceGetAPITokenMethodDescriptor                   = kargoServiceServiceDescriptor.Methods().ByName("GetAPIToken")
+	kargoServiceListAPITokensMethodDescriptor                 = kargoServiceServiceDescriptor.Methods().ByName("ListAPITokens")
 )
 
 // KargoServiceClient is a client for the akuity.io.kargo.service.v1alpha1.KargoService service.
@@ -397,6 +365,8 @@ type KargoServiceClient interface {
 	UpdateResource(context.Context, *connect.Request[v1alpha1.UpdateResourceRequest]) (*connect.Response[v1alpha1.UpdateResourceResponse], error)
 	// DeleteResource deletes Kubernetes resources specified in the provided manifests.
 	DeleteResource(context.Context, *connect.Request[v1alpha1.DeleteResourceRequest]) (*connect.Response[v1alpha1.DeleteResourceResponse], error)
+	// RefreshResource triggers a refresh of the specified Kargo resource.
+	RefreshResource(context.Context, *connect.Request[v1alpha1.RefreshResourceRequest]) (*connect.Response[v1alpha1.RefreshResourceResponse], error)
 	// ListStages retrieves all stages within a project.
 	ListStages(context.Context, *connect.Request[v1alpha1.ListStagesRequest]) (*connect.Response[v1alpha1.ListStagesResponse], error)
 	// ListImages returns available images and their usage across stages.
@@ -407,16 +377,12 @@ type KargoServiceClient interface {
 	WatchStages(context.Context, *connect.Request[v1alpha1.WatchStagesRequest]) (*connect.ServerStreamForClient[v1alpha1.WatchStagesResponse], error)
 	// DeleteStage removes a stage from the system.
 	DeleteStage(context.Context, *connect.Request[v1alpha1.DeleteStageRequest]) (*connect.Response[v1alpha1.DeleteStageResponse], error)
-	// RefreshStage triggers a refresh of stage status and health checks.
-	RefreshStage(context.Context, *connect.Request[v1alpha1.RefreshStageRequest]) (*connect.Response[v1alpha1.RefreshStageResponse], error)
 	// GetClusterConfig retrieves cluster-level configuration settings.
 	GetClusterConfig(context.Context, *connect.Request[v1alpha1.GetClusterConfigRequest]) (*connect.Response[v1alpha1.GetClusterConfigResponse], error)
 	// DeleteClusterConfig removes cluster-level configuration.
 	DeleteClusterConfig(context.Context, *connect.Request[v1alpha1.DeleteClusterConfigRequest]) (*connect.Response[v1alpha1.DeleteClusterConfigResponse], error)
 	// WatchClusterConfig provides streaming updates for cluster configuration changes.
 	WatchClusterConfig(context.Context, *connect.Request[v1alpha1.WatchClusterConfigRequest]) (*connect.ServerStreamForClient[v1alpha1.WatchClusterConfigResponse], error)
-	// RefreshClusterConfig triggers a refresh of cluster configuration.
-	RefreshClusterConfig(context.Context, *connect.Request[v1alpha1.RefreshClusterConfigRequest]) (*connect.Response[v1alpha1.RefreshClusterConfigResponse], error)
 	// ListPromotions retrieves all promotions, optionally filtered by stage.
 	ListPromotions(context.Context, *connect.Request[v1alpha1.ListPromotionsRequest]) (*connect.Response[v1alpha1.ListPromotionsResponse], error)
 	// WatchPromotions provides streaming updates for promotion changes.
@@ -439,8 +405,6 @@ type KargoServiceClient interface {
 	DeleteProjectConfig(context.Context, *connect.Request[v1alpha1.DeleteProjectConfigRequest]) (*connect.Response[v1alpha1.DeleteProjectConfigResponse], error)
 	// WatchProjectConfig provides streaming updates for project configuration changes.
 	WatchProjectConfig(context.Context, *connect.Request[v1alpha1.WatchProjectConfigRequest]) (*connect.ServerStreamForClient[v1alpha1.WatchProjectConfigResponse], error)
-	// RefreshProjectConfig triggers a refresh of project configuration.
-	RefreshProjectConfig(context.Context, *connect.Request[v1alpha1.RefreshProjectConfigRequest]) (*connect.Response[v1alpha1.RefreshProjectConfigResponse], error)
 	// ApproveFreight marks freight as approved for promotion to a specific stage.
 	ApproveFreight(context.Context, *connect.Request[v1alpha1.ApproveFreightRequest]) (*connect.Response[v1alpha1.ApproveFreightResponse], error)
 	// DeleteFreight removes freight from the system.
@@ -469,30 +433,36 @@ type KargoServiceClient interface {
 	WatchWarehouses(context.Context, *connect.Request[v1alpha1.WatchWarehousesRequest]) (*connect.ServerStreamForClient[v1alpha1.WatchWarehousesResponse], error)
 	// DeleteWarehouse removes a warehouse from the system.
 	DeleteWarehouse(context.Context, *connect.Request[v1alpha1.DeleteWarehouseRequest]) (*connect.Response[v1alpha1.DeleteWarehouseResponse], error)
-	// RefreshWarehouse triggers a refresh of warehouse status and freight discovery.
-	RefreshWarehouse(context.Context, *connect.Request[v1alpha1.RefreshWarehouseRequest]) (*connect.Response[v1alpha1.RefreshWarehouseResponse], error)
-	// CreateCredentials creates new credentials for accessing external resources.
-	CreateCredentials(context.Context, *connect.Request[v1alpha1.CreateCredentialsRequest]) (*connect.Response[v1alpha1.CreateCredentialsResponse], error)
-	// DeleteCredentials removes credentials from the system.
-	DeleteCredentials(context.Context, *connect.Request[v1alpha1.DeleteCredentialsRequest]) (*connect.Response[v1alpha1.DeleteCredentialsResponse], error)
-	// GetCredentials retrieves details of specific credentials.
-	GetCredentials(context.Context, *connect.Request[v1alpha1.GetCredentialsRequest]) (*connect.Response[v1alpha1.GetCredentialsResponse], error)
-	// ListCredentials retrieves all credentials within a project.
-	ListCredentials(context.Context, *connect.Request[v1alpha1.ListCredentialsRequest]) (*connect.Response[v1alpha1.ListCredentialsResponse], error)
-	// UpdateCredentials modifies existing credentials.
-	UpdateCredentials(context.Context, *connect.Request[v1alpha1.UpdateCredentialsRequest]) (*connect.Response[v1alpha1.UpdateCredentialsResponse], error)
-	// ListProjectSecrets retrieves all secrets within a project.
-	ListProjectSecrets(context.Context, *connect.Request[v1alpha1.ListProjectSecretsRequest]) (*connect.Response[v1alpha1.ListProjectSecretsResponse], error)
-	// CreateProjectSecret creates a new secret within a project.
-	CreateProjectSecret(context.Context, *connect.Request[v1alpha1.CreateProjectSecretRequest]) (*connect.Response[v1alpha1.CreateProjectSecretResponse], error)
-	// UpdateProjectSecret modifies an existing project secret.
-	UpdateProjectSecret(context.Context, *connect.Request[v1alpha1.UpdateProjectSecretRequest]) (*connect.Response[v1alpha1.UpdateProjectSecretResponse], error)
-	// DeleteProjectSecret removes a secret from a project.
-	DeleteProjectSecret(context.Context, *connect.Request[v1alpha1.DeleteProjectSecretRequest]) (*connect.Response[v1alpha1.DeleteProjectSecretResponse], error)
+	// CreateRepoCredentials creates new credentials for accessing external repositories.
+	CreateRepoCredentials(context.Context, *connect.Request[v1alpha1.CreateRepoCredentialsRequest]) (*connect.Response[v1alpha1.CreateRepoCredentialsResponse], error)
+	// DeleteRepoCredentials removes repository credentials from the system.
+	DeleteRepoCredentials(context.Context, *connect.Request[v1alpha1.DeleteRepoCredentialsRequest]) (*connect.Response[v1alpha1.DeleteRepoCredentialsResponse], error)
+	// GetRepoCredentials retrieves details of specific repository credentials.
+	GetRepoCredentials(context.Context, *connect.Request[v1alpha1.GetRepoCredentialsRequest]) (*connect.Response[v1alpha1.GetRepoCredentialsResponse], error)
+	// ListRepoCredentials retrieves all repository credentials within a project.
+	ListRepoCredentials(context.Context, *connect.Request[v1alpha1.ListRepoCredentialsRequest]) (*connect.Response[v1alpha1.ListRepoCredentialsResponse], error)
+	// UpdateRepoCredentials modifies existing repository credentials.
+	UpdateRepoCredentials(context.Context, *connect.Request[v1alpha1.UpdateRepoCredentialsRequest]) (*connect.Response[v1alpha1.UpdateRepoCredentialsResponse], error)
+	// ListGenericCredentials retrieves all generic credentials within a project.
+	ListGenericCredentials(context.Context, *connect.Request[v1alpha1.ListGenericCredentialsRequest]) (*connect.Response[v1alpha1.ListGenericCredentialsResponse], error)
+	// CreateGenericCredentials creates new generic credentials within a project.
+	CreateGenericCredentials(context.Context, *connect.Request[v1alpha1.CreateGenericCredentialsRequest]) (*connect.Response[v1alpha1.CreateGenericCredentialsResponse], error)
+	// UpdateGenericCredentials modifies existing generic credentials.
+	UpdateGenericCredentials(context.Context, *connect.Request[v1alpha1.UpdateGenericCredentialsRequest]) (*connect.Response[v1alpha1.UpdateGenericCredentialsResponse], error)
+	// DeleteGenericCredentials removes generic credentials from a project.
+	DeleteGenericCredentials(context.Context, *connect.Request[v1alpha1.DeleteGenericCredentialsRequest]) (*connect.Response[v1alpha1.DeleteGenericCredentialsResponse], error)
+	// CreateConfigMap creates a new project-level, system-level, or shared
+	// ConfigMap.
+	CreateConfigMap(context.Context, *connect.Request[v1alpha1.CreateConfigMapRequest]) (*connect.Response[v1alpha1.CreateConfigMapResponse], error)
+	// DeleteConfigMap deletes a project-level, system-level, or shared ConfigMap.
+	DeleteConfigMap(context.Context, *connect.Request[v1alpha1.DeleteConfigMapRequest]) (*connect.Response[v1alpha1.DeleteConfigMapResponse], error)
 	// ListConfigMaps retrieves all ConfigMaps within a project.
 	ListConfigMaps(context.Context, *connect.Request[v1alpha1.ListConfigMapsRequest]) (*connect.Response[v1alpha1.ListConfigMapsResponse], error)
-	// GetConfigMap retrieves details of a specific ConfigMap.
+	// GetConfigMap retrieves details of a specific project-level, system-level,
+	// or shared ConfigMap.
 	GetConfigMap(context.Context, *connect.Request[v1alpha1.GetConfigMapRequest]) (*connect.Response[v1alpha1.GetConfigMapResponse], error)
+	// UpdateConfigMap updates a project-level, system-level, or shared ConfigMap.
+	UpdateConfigMap(context.Context, *connect.Request[v1alpha1.UpdateConfigMapRequest]) (*connect.Response[v1alpha1.UpdateConfigMapResponse], error)
 	// ListAnalysisTemplates retrieves all AnalysisTemplates within a project.
 	ListAnalysisTemplates(context.Context, *connect.Request[v1alpha1.ListAnalysisTemplatesRequest]) (*connect.Response[v1alpha1.ListAnalysisTemplatesResponse], error)
 	// GetAnalysisTemplate retrieves details of a specific AnalysisTemplate.
@@ -528,48 +498,32 @@ type KargoServiceClient interface {
 	// GetRole retrieves details of a Kargo Role virtual resource or its
 	// underlying Kubernetes resources.
 	GetRole(context.Context, *connect.Request[v1alpha1.GetRoleRequest]) (*connect.Response[v1alpha1.GetRoleResponse], error)
-	// Grant assigns permissions to a Kargo Role; or binds a Kargo ServiceAccount
-	// or users having specific OIDC claims to a Kargo Role by updating its
-	// underlying Kubernetes resources.
+	// Grant assigns permissions to a Kargo Role virtual resource or binds users
+	// having specific OIDC claims to a Kargo Role virtual resource by updating
+	// its underlying Kubernetes resources.
 	Grant(context.Context, *connect.Request[v1alpha1.GrantRequest]) (*connect.Response[v1alpha1.GrantResponse], error)
 	// ListRoles retrieves details of all Kargo Role virtual resources or their
 	// underlying Kubernetes resources.
 	ListRoles(context.Context, *connect.Request[v1alpha1.ListRolesRequest]) (*connect.Response[v1alpha1.ListRolesResponse], error)
-	// Revoke removes permissions from a Kargo Role; or unbinds a Kargo
-	// ServiceAccount or users having specific OIDC claims from a Kargo Role by
+	// Revoke removes permissions from a Kargo Role virtual resource or unbinds
+	// users having specific OIDC claims from a Kargo Role virtual resource by
 	// updating its underlying Kubernetes resources.
 	Revoke(context.Context, *connect.Request[v1alpha1.RevokeRequest]) (*connect.Response[v1alpha1.RevokeResponse], error)
 	// UpdateRole modifies an existing Kargo Role virtual resource by updating its
 	// underlying Kubernetes resources.
 	UpdateRole(context.Context, *connect.Request[v1alpha1.UpdateRoleRequest]) (*connect.Response[v1alpha1.UpdateRoleResponse], error)
-	// CreateServiceAccount creates a new Kargo ServiceAccount.
-	CreateServiceAccount(context.Context, *connect.Request[v1alpha1.CreateServiceAccountRequest]) (*connect.Response[v1alpha1.CreateServiceAccountResponse], error)
-	// DeleteServiceAccount removes a Kargo ServiceAccount.
-	DeleteServiceAccount(context.Context, *connect.Request[v1alpha1.DeleteServiceAccountRequest]) (*connect.Response[v1alpha1.DeleteServiceAccountResponse], error)
-	// GetServiceAccount retrieves details of a specific Kargo ServiceAccount.
-	GetServiceAccount(context.Context, *connect.Request[v1alpha1.GetServiceAccountRequest]) (*connect.Response[v1alpha1.GetServiceAccountResponse], error)
-	// ListServiceAccounts retrieves details of all Kargo ServiceAccounts.
-	ListServiceAccounts(context.Context, *connect.Request[v1alpha1.ListServiceAccountsRequest]) (*connect.Response[v1alpha1.ListServiceAccountsResponse], error)
-	// CreateServiceAccountToken generates and returns a new bearer token
-	// associated with a Kargo ServiceAccount.
-	CreateServiceAccountToken(context.Context, *connect.Request[v1alpha1.CreateServiceAccountTokenRequest]) (*connect.Response[v1alpha1.CreateServiceAccountTokenResponse], error)
-	// DeleteServiceAccountToken deletes a bearer token associated with a
-	// Kargo ServiceAccount.
-	DeleteServiceAccountToken(context.Context, *connect.Request[v1alpha1.DeleteServiceAccountTokenRequest]) (*connect.Response[v1alpha1.DeleteServiceAccountTokenResponse], error)
-	// GetServiceAccountToken retrieves details of a specific bearer token
-	// associated with a Kargo ServiceAccount.
-	GetServiceAccountToken(context.Context, *connect.Request[v1alpha1.GetServiceAccountTokenRequest]) (*connect.Response[v1alpha1.GetServiceAccountTokenResponse], error)
-	// ListServiceAccountTokens lists bearer tokens associated with
-	// with a specified Kargo ServiceAccount.
-	ListServiceAccountTokens(context.Context, *connect.Request[v1alpha1.ListServiceAccountTokensRequest]) (*connect.Response[v1alpha1.ListServiceAccountTokensResponse], error)
-	// ListClusterSecrets retrieves all cluster-scoped secrets.
-	ListClusterSecrets(context.Context, *connect.Request[v1alpha1.ListClusterSecretsRequest]) (*connect.Response[v1alpha1.ListClusterSecretsResponse], error)
-	// CreateClusterSecret creates a new cluster-scoped secret.
-	CreateClusterSecret(context.Context, *connect.Request[v1alpha1.CreateClusterSecretRequest]) (*connect.Response[v1alpha1.CreateClusterSecretResponse], error)
-	// UpdateClusterSecret modifies an existing cluster-scoped secret.
-	UpdateClusterSecret(context.Context, *connect.Request[v1alpha1.UpdateClusterSecretRequest]) (*connect.Response[v1alpha1.UpdateClusterSecretResponse], error)
-	// DeleteClusterSecret removes a cluster-scoped secret.
-	DeleteClusterSecret(context.Context, *connect.Request[v1alpha1.DeleteClusterSecretRequest]) (*connect.Response[v1alpha1.DeleteClusterSecretResponse], error)
+	// CreateAPIToken generates and returns a new bearer token associated with a
+	// Kargo Role virtual resource.
+	CreateAPIToken(context.Context, *connect.Request[v1alpha1.CreateAPITokenRequest]) (*connect.Response[v1alpha1.CreateAPITokenResponse], error)
+	// DeleteToken deletes a bearer token associated with a Kargo Role virtual
+	// resource.
+	DeleteAPIToken(context.Context, *connect.Request[v1alpha1.DeleteAPITokenRequest]) (*connect.Response[v1alpha1.DeleteAPITokenResponse], error)
+	// GetAPIToken retrieves details of a specific bearer token associated with a
+	// Kargo Role virtual resource.
+	GetAPIToken(context.Context, *connect.Request[v1alpha1.GetAPITokenRequest]) (*connect.Response[v1alpha1.GetAPITokenResponse], error)
+	// ListAPITokens lists bearer tokens associated with with a specified Kargo
+	// Role virtual resource.
+	ListAPITokens(context.Context, *connect.Request[v1alpha1.ListAPITokensRequest]) (*connect.Response[v1alpha1.ListAPITokensResponse], error)
 }
 
 // NewKargoServiceClient constructs a client for the akuity.io.kargo.service.v1alpha1.KargoService
@@ -630,6 +584,12 @@ func NewKargoServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			connect.WithSchema(kargoServiceDeleteResourceMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		refreshResource: connect.NewClient[v1alpha1.RefreshResourceRequest, v1alpha1.RefreshResourceResponse](
+			httpClient,
+			baseURL+KargoServiceRefreshResourceProcedure,
+			connect.WithSchema(kargoServiceRefreshResourceMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 		listStages: connect.NewClient[v1alpha1.ListStagesRequest, v1alpha1.ListStagesResponse](
 			httpClient,
 			baseURL+KargoServiceListStagesProcedure,
@@ -660,12 +620,6 @@ func NewKargoServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			connect.WithSchema(kargoServiceDeleteStageMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		refreshStage: connect.NewClient[v1alpha1.RefreshStageRequest, v1alpha1.RefreshStageResponse](
-			httpClient,
-			baseURL+KargoServiceRefreshStageProcedure,
-			connect.WithSchema(kargoServiceRefreshStageMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
 		getClusterConfig: connect.NewClient[v1alpha1.GetClusterConfigRequest, v1alpha1.GetClusterConfigResponse](
 			httpClient,
 			baseURL+KargoServiceGetClusterConfigProcedure,
@@ -682,12 +636,6 @@ func NewKargoServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			httpClient,
 			baseURL+KargoServiceWatchClusterConfigProcedure,
 			connect.WithSchema(kargoServiceWatchClusterConfigMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
-		refreshClusterConfig: connect.NewClient[v1alpha1.RefreshClusterConfigRequest, v1alpha1.RefreshClusterConfigResponse](
-			httpClient,
-			baseURL+KargoServiceRefreshClusterConfigProcedure,
-			connect.WithSchema(kargoServiceRefreshClusterConfigMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		listPromotions: connect.NewClient[v1alpha1.ListPromotionsRequest, v1alpha1.ListPromotionsResponse](
@@ -754,12 +702,6 @@ func NewKargoServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			httpClient,
 			baseURL+KargoServiceWatchProjectConfigProcedure,
 			connect.WithSchema(kargoServiceWatchProjectConfigMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
-		refreshProjectConfig: connect.NewClient[v1alpha1.RefreshProjectConfigRequest, v1alpha1.RefreshProjectConfigResponse](
-			httpClient,
-			baseURL+KargoServiceRefreshProjectConfigProcedure,
-			connect.WithSchema(kargoServiceRefreshProjectConfigMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		approveFreight: connect.NewClient[v1alpha1.ApproveFreightRequest, v1alpha1.ApproveFreightResponse](
@@ -846,64 +788,70 @@ func NewKargoServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			connect.WithSchema(kargoServiceDeleteWarehouseMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		refreshWarehouse: connect.NewClient[v1alpha1.RefreshWarehouseRequest, v1alpha1.RefreshWarehouseResponse](
+		createRepoCredentials: connect.NewClient[v1alpha1.CreateRepoCredentialsRequest, v1alpha1.CreateRepoCredentialsResponse](
 			httpClient,
-			baseURL+KargoServiceRefreshWarehouseProcedure,
-			connect.WithSchema(kargoServiceRefreshWarehouseMethodDescriptor),
+			baseURL+KargoServiceCreateRepoCredentialsProcedure,
+			connect.WithSchema(kargoServiceCreateRepoCredentialsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		createCredentials: connect.NewClient[v1alpha1.CreateCredentialsRequest, v1alpha1.CreateCredentialsResponse](
+		deleteRepoCredentials: connect.NewClient[v1alpha1.DeleteRepoCredentialsRequest, v1alpha1.DeleteRepoCredentialsResponse](
 			httpClient,
-			baseURL+KargoServiceCreateCredentialsProcedure,
-			connect.WithSchema(kargoServiceCreateCredentialsMethodDescriptor),
+			baseURL+KargoServiceDeleteRepoCredentialsProcedure,
+			connect.WithSchema(kargoServiceDeleteRepoCredentialsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		deleteCredentials: connect.NewClient[v1alpha1.DeleteCredentialsRequest, v1alpha1.DeleteCredentialsResponse](
+		getRepoCredentials: connect.NewClient[v1alpha1.GetRepoCredentialsRequest, v1alpha1.GetRepoCredentialsResponse](
 			httpClient,
-			baseURL+KargoServiceDeleteCredentialsProcedure,
-			connect.WithSchema(kargoServiceDeleteCredentialsMethodDescriptor),
+			baseURL+KargoServiceGetRepoCredentialsProcedure,
+			connect.WithSchema(kargoServiceGetRepoCredentialsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getCredentials: connect.NewClient[v1alpha1.GetCredentialsRequest, v1alpha1.GetCredentialsResponse](
+		listRepoCredentials: connect.NewClient[v1alpha1.ListRepoCredentialsRequest, v1alpha1.ListRepoCredentialsResponse](
 			httpClient,
-			baseURL+KargoServiceGetCredentialsProcedure,
-			connect.WithSchema(kargoServiceGetCredentialsMethodDescriptor),
+			baseURL+KargoServiceListRepoCredentialsProcedure,
+			connect.WithSchema(kargoServiceListRepoCredentialsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		listCredentials: connect.NewClient[v1alpha1.ListCredentialsRequest, v1alpha1.ListCredentialsResponse](
+		updateRepoCredentials: connect.NewClient[v1alpha1.UpdateRepoCredentialsRequest, v1alpha1.UpdateRepoCredentialsResponse](
 			httpClient,
-			baseURL+KargoServiceListCredentialsProcedure,
-			connect.WithSchema(kargoServiceListCredentialsMethodDescriptor),
+			baseURL+KargoServiceUpdateRepoCredentialsProcedure,
+			connect.WithSchema(kargoServiceUpdateRepoCredentialsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		updateCredentials: connect.NewClient[v1alpha1.UpdateCredentialsRequest, v1alpha1.UpdateCredentialsResponse](
+		listGenericCredentials: connect.NewClient[v1alpha1.ListGenericCredentialsRequest, v1alpha1.ListGenericCredentialsResponse](
 			httpClient,
-			baseURL+KargoServiceUpdateCredentialsProcedure,
-			connect.WithSchema(kargoServiceUpdateCredentialsMethodDescriptor),
+			baseURL+KargoServiceListGenericCredentialsProcedure,
+			connect.WithSchema(kargoServiceListGenericCredentialsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		listProjectSecrets: connect.NewClient[v1alpha1.ListProjectSecretsRequest, v1alpha1.ListProjectSecretsResponse](
+		createGenericCredentials: connect.NewClient[v1alpha1.CreateGenericCredentialsRequest, v1alpha1.CreateGenericCredentialsResponse](
 			httpClient,
-			baseURL+KargoServiceListProjectSecretsProcedure,
-			connect.WithSchema(kargoServiceListProjectSecretsMethodDescriptor),
+			baseURL+KargoServiceCreateGenericCredentialsProcedure,
+			connect.WithSchema(kargoServiceCreateGenericCredentialsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		createProjectSecret: connect.NewClient[v1alpha1.CreateProjectSecretRequest, v1alpha1.CreateProjectSecretResponse](
+		updateGenericCredentials: connect.NewClient[v1alpha1.UpdateGenericCredentialsRequest, v1alpha1.UpdateGenericCredentialsResponse](
 			httpClient,
-			baseURL+KargoServiceCreateProjectSecretProcedure,
-			connect.WithSchema(kargoServiceCreateProjectSecretMethodDescriptor),
+			baseURL+KargoServiceUpdateGenericCredentialsProcedure,
+			connect.WithSchema(kargoServiceUpdateGenericCredentialsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		updateProjectSecret: connect.NewClient[v1alpha1.UpdateProjectSecretRequest, v1alpha1.UpdateProjectSecretResponse](
+		deleteGenericCredentials: connect.NewClient[v1alpha1.DeleteGenericCredentialsRequest, v1alpha1.DeleteGenericCredentialsResponse](
 			httpClient,
-			baseURL+KargoServiceUpdateProjectSecretProcedure,
-			connect.WithSchema(kargoServiceUpdateProjectSecretMethodDescriptor),
+			baseURL+KargoServiceDeleteGenericCredentialsProcedure,
+			connect.WithSchema(kargoServiceDeleteGenericCredentialsMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		deleteProjectSecret: connect.NewClient[v1alpha1.DeleteProjectSecretRequest, v1alpha1.DeleteProjectSecretResponse](
+		createConfigMap: connect.NewClient[v1alpha1.CreateConfigMapRequest, v1alpha1.CreateConfigMapResponse](
 			httpClient,
-			baseURL+KargoServiceDeleteProjectSecretProcedure,
-			connect.WithSchema(kargoServiceDeleteProjectSecretMethodDescriptor),
+			baseURL+KargoServiceCreateConfigMapProcedure,
+			connect.WithSchema(kargoServiceCreateConfigMapMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		deleteConfigMap: connect.NewClient[v1alpha1.DeleteConfigMapRequest, v1alpha1.DeleteConfigMapResponse](
+			httpClient,
+			baseURL+KargoServiceDeleteConfigMapProcedure,
+			connect.WithSchema(kargoServiceDeleteConfigMapMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		listConfigMaps: connect.NewClient[v1alpha1.ListConfigMapsRequest, v1alpha1.ListConfigMapsResponse](
@@ -916,6 +864,12 @@ func NewKargoServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			httpClient,
 			baseURL+KargoServiceGetConfigMapProcedure,
 			connect.WithSchema(kargoServiceGetConfigMapMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		updateConfigMap: connect.NewClient[v1alpha1.UpdateConfigMapRequest, v1alpha1.UpdateConfigMapResponse](
+			httpClient,
+			baseURL+KargoServiceUpdateConfigMapProcedure,
+			connect.WithSchema(kargoServiceUpdateConfigMapMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		listAnalysisTemplates: connect.NewClient[v1alpha1.ListAnalysisTemplatesRequest, v1alpha1.ListAnalysisTemplatesResponse](
@@ -1038,76 +992,28 @@ func NewKargoServiceClient(httpClient connect.HTTPClient, baseURL string, opts .
 			connect.WithSchema(kargoServiceUpdateRoleMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		createServiceAccount: connect.NewClient[v1alpha1.CreateServiceAccountRequest, v1alpha1.CreateServiceAccountResponse](
+		createAPIToken: connect.NewClient[v1alpha1.CreateAPITokenRequest, v1alpha1.CreateAPITokenResponse](
 			httpClient,
-			baseURL+KargoServiceCreateServiceAccountProcedure,
-			connect.WithSchema(kargoServiceCreateServiceAccountMethodDescriptor),
+			baseURL+KargoServiceCreateAPITokenProcedure,
+			connect.WithSchema(kargoServiceCreateAPITokenMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		deleteServiceAccount: connect.NewClient[v1alpha1.DeleteServiceAccountRequest, v1alpha1.DeleteServiceAccountResponse](
+		deleteAPIToken: connect.NewClient[v1alpha1.DeleteAPITokenRequest, v1alpha1.DeleteAPITokenResponse](
 			httpClient,
-			baseURL+KargoServiceDeleteServiceAccountProcedure,
-			connect.WithSchema(kargoServiceDeleteServiceAccountMethodDescriptor),
+			baseURL+KargoServiceDeleteAPITokenProcedure,
+			connect.WithSchema(kargoServiceDeleteAPITokenMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getServiceAccount: connect.NewClient[v1alpha1.GetServiceAccountRequest, v1alpha1.GetServiceAccountResponse](
+		getAPIToken: connect.NewClient[v1alpha1.GetAPITokenRequest, v1alpha1.GetAPITokenResponse](
 			httpClient,
-			baseURL+KargoServiceGetServiceAccountProcedure,
-			connect.WithSchema(kargoServiceGetServiceAccountMethodDescriptor),
+			baseURL+KargoServiceGetAPITokenProcedure,
+			connect.WithSchema(kargoServiceGetAPITokenMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		listServiceAccounts: connect.NewClient[v1alpha1.ListServiceAccountsRequest, v1alpha1.ListServiceAccountsResponse](
+		listAPITokens: connect.NewClient[v1alpha1.ListAPITokensRequest, v1alpha1.ListAPITokensResponse](
 			httpClient,
-			baseURL+KargoServiceListServiceAccountsProcedure,
-			connect.WithSchema(kargoServiceListServiceAccountsMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
-		createServiceAccountToken: connect.NewClient[v1alpha1.CreateServiceAccountTokenRequest, v1alpha1.CreateServiceAccountTokenResponse](
-			httpClient,
-			baseURL+KargoServiceCreateServiceAccountTokenProcedure,
-			connect.WithSchema(kargoServiceCreateServiceAccountTokenMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
-		deleteServiceAccountToken: connect.NewClient[v1alpha1.DeleteServiceAccountTokenRequest, v1alpha1.DeleteServiceAccountTokenResponse](
-			httpClient,
-			baseURL+KargoServiceDeleteServiceAccountTokenProcedure,
-			connect.WithSchema(kargoServiceDeleteServiceAccountTokenMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
-		getServiceAccountToken: connect.NewClient[v1alpha1.GetServiceAccountTokenRequest, v1alpha1.GetServiceAccountTokenResponse](
-			httpClient,
-			baseURL+KargoServiceGetServiceAccountTokenProcedure,
-			connect.WithSchema(kargoServiceGetServiceAccountTokenMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
-		listServiceAccountTokens: connect.NewClient[v1alpha1.ListServiceAccountTokensRequest, v1alpha1.ListServiceAccountTokensResponse](
-			httpClient,
-			baseURL+KargoServiceListServiceAccountTokensProcedure,
-			connect.WithSchema(kargoServiceListServiceAccountTokensMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
-		listClusterSecrets: connect.NewClient[v1alpha1.ListClusterSecretsRequest, v1alpha1.ListClusterSecretsResponse](
-			httpClient,
-			baseURL+KargoServiceListClusterSecretsProcedure,
-			connect.WithSchema(kargoServiceListClusterSecretsMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
-		createClusterSecret: connect.NewClient[v1alpha1.CreateClusterSecretRequest, v1alpha1.CreateClusterSecretResponse](
-			httpClient,
-			baseURL+KargoServiceCreateClusterSecretProcedure,
-			connect.WithSchema(kargoServiceCreateClusterSecretMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
-		updateClusterSecret: connect.NewClient[v1alpha1.UpdateClusterSecretRequest, v1alpha1.UpdateClusterSecretResponse](
-			httpClient,
-			baseURL+KargoServiceUpdateClusterSecretProcedure,
-			connect.WithSchema(kargoServiceUpdateClusterSecretMethodDescriptor),
-			connect.WithClientOptions(opts...),
-		),
-		deleteClusterSecret: connect.NewClient[v1alpha1.DeleteClusterSecretRequest, v1alpha1.DeleteClusterSecretResponse](
-			httpClient,
-			baseURL+KargoServiceDeleteClusterSecretProcedure,
-			connect.WithSchema(kargoServiceDeleteClusterSecretMethodDescriptor),
+			baseURL+KargoServiceListAPITokensProcedure,
+			connect.WithSchema(kargoServiceListAPITokensMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -1123,16 +1029,15 @@ type kargoServiceClient struct {
 	createOrUpdateResource        *connect.Client[v1alpha1.CreateOrUpdateResourceRequest, v1alpha1.CreateOrUpdateResourceResponse]
 	updateResource                *connect.Client[v1alpha1.UpdateResourceRequest, v1alpha1.UpdateResourceResponse]
 	deleteResource                *connect.Client[v1alpha1.DeleteResourceRequest, v1alpha1.DeleteResourceResponse]
+	refreshResource               *connect.Client[v1alpha1.RefreshResourceRequest, v1alpha1.RefreshResourceResponse]
 	listStages                    *connect.Client[v1alpha1.ListStagesRequest, v1alpha1.ListStagesResponse]
 	listImages                    *connect.Client[v1alpha1.ListImagesRequest, v1alpha1.ListImagesResponse]
 	getStage                      *connect.Client[v1alpha1.GetStageRequest, v1alpha1.GetStageResponse]
 	watchStages                   *connect.Client[v1alpha1.WatchStagesRequest, v1alpha1.WatchStagesResponse]
 	deleteStage                   *connect.Client[v1alpha1.DeleteStageRequest, v1alpha1.DeleteStageResponse]
-	refreshStage                  *connect.Client[v1alpha1.RefreshStageRequest, v1alpha1.RefreshStageResponse]
 	getClusterConfig              *connect.Client[v1alpha1.GetClusterConfigRequest, v1alpha1.GetClusterConfigResponse]
 	deleteClusterConfig           *connect.Client[v1alpha1.DeleteClusterConfigRequest, v1alpha1.DeleteClusterConfigResponse]
 	watchClusterConfig            *connect.Client[v1alpha1.WatchClusterConfigRequest, v1alpha1.WatchClusterConfigResponse]
-	refreshClusterConfig          *connect.Client[v1alpha1.RefreshClusterConfigRequest, v1alpha1.RefreshClusterConfigResponse]
 	listPromotions                *connect.Client[v1alpha1.ListPromotionsRequest, v1alpha1.ListPromotionsResponse]
 	watchPromotions               *connect.Client[v1alpha1.WatchPromotionsRequest, v1alpha1.WatchPromotionsResponse]
 	getPromotion                  *connect.Client[v1alpha1.GetPromotionRequest, v1alpha1.GetPromotionResponse]
@@ -1144,7 +1049,6 @@ type kargoServiceClient struct {
 	getProjectConfig              *connect.Client[v1alpha1.GetProjectConfigRequest, v1alpha1.GetProjectConfigResponse]
 	deleteProjectConfig           *connect.Client[v1alpha1.DeleteProjectConfigRequest, v1alpha1.DeleteProjectConfigResponse]
 	watchProjectConfig            *connect.Client[v1alpha1.WatchProjectConfigRequest, v1alpha1.WatchProjectConfigResponse]
-	refreshProjectConfig          *connect.Client[v1alpha1.RefreshProjectConfigRequest, v1alpha1.RefreshProjectConfigResponse]
 	approveFreight                *connect.Client[v1alpha1.ApproveFreightRequest, v1alpha1.ApproveFreightResponse]
 	deleteFreight                 *connect.Client[v1alpha1.DeleteFreightRequest, v1alpha1.DeleteFreightResponse]
 	getFreight                    *connect.Client[v1alpha1.GetFreightRequest, v1alpha1.GetFreightResponse]
@@ -1159,18 +1063,20 @@ type kargoServiceClient struct {
 	getWarehouse                  *connect.Client[v1alpha1.GetWarehouseRequest, v1alpha1.GetWarehouseResponse]
 	watchWarehouses               *connect.Client[v1alpha1.WatchWarehousesRequest, v1alpha1.WatchWarehousesResponse]
 	deleteWarehouse               *connect.Client[v1alpha1.DeleteWarehouseRequest, v1alpha1.DeleteWarehouseResponse]
-	refreshWarehouse              *connect.Client[v1alpha1.RefreshWarehouseRequest, v1alpha1.RefreshWarehouseResponse]
-	createCredentials             *connect.Client[v1alpha1.CreateCredentialsRequest, v1alpha1.CreateCredentialsResponse]
-	deleteCredentials             *connect.Client[v1alpha1.DeleteCredentialsRequest, v1alpha1.DeleteCredentialsResponse]
-	getCredentials                *connect.Client[v1alpha1.GetCredentialsRequest, v1alpha1.GetCredentialsResponse]
-	listCredentials               *connect.Client[v1alpha1.ListCredentialsRequest, v1alpha1.ListCredentialsResponse]
-	updateCredentials             *connect.Client[v1alpha1.UpdateCredentialsRequest, v1alpha1.UpdateCredentialsResponse]
-	listProjectSecrets            *connect.Client[v1alpha1.ListProjectSecretsRequest, v1alpha1.ListProjectSecretsResponse]
-	createProjectSecret           *connect.Client[v1alpha1.CreateProjectSecretRequest, v1alpha1.CreateProjectSecretResponse]
-	updateProjectSecret           *connect.Client[v1alpha1.UpdateProjectSecretRequest, v1alpha1.UpdateProjectSecretResponse]
-	deleteProjectSecret           *connect.Client[v1alpha1.DeleteProjectSecretRequest, v1alpha1.DeleteProjectSecretResponse]
+	createRepoCredentials         *connect.Client[v1alpha1.CreateRepoCredentialsRequest, v1alpha1.CreateRepoCredentialsResponse]
+	deleteRepoCredentials         *connect.Client[v1alpha1.DeleteRepoCredentialsRequest, v1alpha1.DeleteRepoCredentialsResponse]
+	getRepoCredentials            *connect.Client[v1alpha1.GetRepoCredentialsRequest, v1alpha1.GetRepoCredentialsResponse]
+	listRepoCredentials           *connect.Client[v1alpha1.ListRepoCredentialsRequest, v1alpha1.ListRepoCredentialsResponse]
+	updateRepoCredentials         *connect.Client[v1alpha1.UpdateRepoCredentialsRequest, v1alpha1.UpdateRepoCredentialsResponse]
+	listGenericCredentials        *connect.Client[v1alpha1.ListGenericCredentialsRequest, v1alpha1.ListGenericCredentialsResponse]
+	createGenericCredentials      *connect.Client[v1alpha1.CreateGenericCredentialsRequest, v1alpha1.CreateGenericCredentialsResponse]
+	updateGenericCredentials      *connect.Client[v1alpha1.UpdateGenericCredentialsRequest, v1alpha1.UpdateGenericCredentialsResponse]
+	deleteGenericCredentials      *connect.Client[v1alpha1.DeleteGenericCredentialsRequest, v1alpha1.DeleteGenericCredentialsResponse]
+	createConfigMap               *connect.Client[v1alpha1.CreateConfigMapRequest, v1alpha1.CreateConfigMapResponse]
+	deleteConfigMap               *connect.Client[v1alpha1.DeleteConfigMapRequest, v1alpha1.DeleteConfigMapResponse]
 	listConfigMaps                *connect.Client[v1alpha1.ListConfigMapsRequest, v1alpha1.ListConfigMapsResponse]
 	getConfigMap                  *connect.Client[v1alpha1.GetConfigMapRequest, v1alpha1.GetConfigMapResponse]
+	updateConfigMap               *connect.Client[v1alpha1.UpdateConfigMapRequest, v1alpha1.UpdateConfigMapResponse]
 	listAnalysisTemplates         *connect.Client[v1alpha1.ListAnalysisTemplatesRequest, v1alpha1.ListAnalysisTemplatesResponse]
 	getAnalysisTemplate           *connect.Client[v1alpha1.GetAnalysisTemplateRequest, v1alpha1.GetAnalysisTemplateResponse]
 	deleteAnalysisTemplate        *connect.Client[v1alpha1.DeleteAnalysisTemplateRequest, v1alpha1.DeleteAnalysisTemplateResponse]
@@ -1191,18 +1097,10 @@ type kargoServiceClient struct {
 	listRoles                     *connect.Client[v1alpha1.ListRolesRequest, v1alpha1.ListRolesResponse]
 	revoke                        *connect.Client[v1alpha1.RevokeRequest, v1alpha1.RevokeResponse]
 	updateRole                    *connect.Client[v1alpha1.UpdateRoleRequest, v1alpha1.UpdateRoleResponse]
-	createServiceAccount          *connect.Client[v1alpha1.CreateServiceAccountRequest, v1alpha1.CreateServiceAccountResponse]
-	deleteServiceAccount          *connect.Client[v1alpha1.DeleteServiceAccountRequest, v1alpha1.DeleteServiceAccountResponse]
-	getServiceAccount             *connect.Client[v1alpha1.GetServiceAccountRequest, v1alpha1.GetServiceAccountResponse]
-	listServiceAccounts           *connect.Client[v1alpha1.ListServiceAccountsRequest, v1alpha1.ListServiceAccountsResponse]
-	createServiceAccountToken     *connect.Client[v1alpha1.CreateServiceAccountTokenRequest, v1alpha1.CreateServiceAccountTokenResponse]
-	deleteServiceAccountToken     *connect.Client[v1alpha1.DeleteServiceAccountTokenRequest, v1alpha1.DeleteServiceAccountTokenResponse]
-	getServiceAccountToken        *connect.Client[v1alpha1.GetServiceAccountTokenRequest, v1alpha1.GetServiceAccountTokenResponse]
-	listServiceAccountTokens      *connect.Client[v1alpha1.ListServiceAccountTokensRequest, v1alpha1.ListServiceAccountTokensResponse]
-	listClusterSecrets            *connect.Client[v1alpha1.ListClusterSecretsRequest, v1alpha1.ListClusterSecretsResponse]
-	createClusterSecret           *connect.Client[v1alpha1.CreateClusterSecretRequest, v1alpha1.CreateClusterSecretResponse]
-	updateClusterSecret           *connect.Client[v1alpha1.UpdateClusterSecretRequest, v1alpha1.UpdateClusterSecretResponse]
-	deleteClusterSecret           *connect.Client[v1alpha1.DeleteClusterSecretRequest, v1alpha1.DeleteClusterSecretResponse]
+	createAPIToken                *connect.Client[v1alpha1.CreateAPITokenRequest, v1alpha1.CreateAPITokenResponse]
+	deleteAPIToken                *connect.Client[v1alpha1.DeleteAPITokenRequest, v1alpha1.DeleteAPITokenResponse]
+	getAPIToken                   *connect.Client[v1alpha1.GetAPITokenRequest, v1alpha1.GetAPITokenResponse]
+	listAPITokens                 *connect.Client[v1alpha1.ListAPITokensRequest, v1alpha1.ListAPITokensResponse]
 }
 
 // GetVersionInfo calls akuity.io.kargo.service.v1alpha1.KargoService.GetVersionInfo.
@@ -1246,6 +1144,11 @@ func (c *kargoServiceClient) DeleteResource(ctx context.Context, req *connect.Re
 	return c.deleteResource.CallUnary(ctx, req)
 }
 
+// RefreshResource calls akuity.io.kargo.service.v1alpha1.KargoService.RefreshResource.
+func (c *kargoServiceClient) RefreshResource(ctx context.Context, req *connect.Request[v1alpha1.RefreshResourceRequest]) (*connect.Response[v1alpha1.RefreshResourceResponse], error) {
+	return c.refreshResource.CallUnary(ctx, req)
+}
+
 // ListStages calls akuity.io.kargo.service.v1alpha1.KargoService.ListStages.
 func (c *kargoServiceClient) ListStages(ctx context.Context, req *connect.Request[v1alpha1.ListStagesRequest]) (*connect.Response[v1alpha1.ListStagesResponse], error) {
 	return c.listStages.CallUnary(ctx, req)
@@ -1271,11 +1174,6 @@ func (c *kargoServiceClient) DeleteStage(ctx context.Context, req *connect.Reque
 	return c.deleteStage.CallUnary(ctx, req)
 }
 
-// RefreshStage calls akuity.io.kargo.service.v1alpha1.KargoService.RefreshStage.
-func (c *kargoServiceClient) RefreshStage(ctx context.Context, req *connect.Request[v1alpha1.RefreshStageRequest]) (*connect.Response[v1alpha1.RefreshStageResponse], error) {
-	return c.refreshStage.CallUnary(ctx, req)
-}
-
 // GetClusterConfig calls akuity.io.kargo.service.v1alpha1.KargoService.GetClusterConfig.
 func (c *kargoServiceClient) GetClusterConfig(ctx context.Context, req *connect.Request[v1alpha1.GetClusterConfigRequest]) (*connect.Response[v1alpha1.GetClusterConfigResponse], error) {
 	return c.getClusterConfig.CallUnary(ctx, req)
@@ -1289,11 +1187,6 @@ func (c *kargoServiceClient) DeleteClusterConfig(ctx context.Context, req *conne
 // WatchClusterConfig calls akuity.io.kargo.service.v1alpha1.KargoService.WatchClusterConfig.
 func (c *kargoServiceClient) WatchClusterConfig(ctx context.Context, req *connect.Request[v1alpha1.WatchClusterConfigRequest]) (*connect.ServerStreamForClient[v1alpha1.WatchClusterConfigResponse], error) {
 	return c.watchClusterConfig.CallServerStream(ctx, req)
-}
-
-// RefreshClusterConfig calls akuity.io.kargo.service.v1alpha1.KargoService.RefreshClusterConfig.
-func (c *kargoServiceClient) RefreshClusterConfig(ctx context.Context, req *connect.Request[v1alpha1.RefreshClusterConfigRequest]) (*connect.Response[v1alpha1.RefreshClusterConfigResponse], error) {
-	return c.refreshClusterConfig.CallUnary(ctx, req)
 }
 
 // ListPromotions calls akuity.io.kargo.service.v1alpha1.KargoService.ListPromotions.
@@ -1349,11 +1242,6 @@ func (c *kargoServiceClient) DeleteProjectConfig(ctx context.Context, req *conne
 // WatchProjectConfig calls akuity.io.kargo.service.v1alpha1.KargoService.WatchProjectConfig.
 func (c *kargoServiceClient) WatchProjectConfig(ctx context.Context, req *connect.Request[v1alpha1.WatchProjectConfigRequest]) (*connect.ServerStreamForClient[v1alpha1.WatchProjectConfigResponse], error) {
 	return c.watchProjectConfig.CallServerStream(ctx, req)
-}
-
-// RefreshProjectConfig calls akuity.io.kargo.service.v1alpha1.KargoService.RefreshProjectConfig.
-func (c *kargoServiceClient) RefreshProjectConfig(ctx context.Context, req *connect.Request[v1alpha1.RefreshProjectConfigRequest]) (*connect.Response[v1alpha1.RefreshProjectConfigResponse], error) {
-	return c.refreshProjectConfig.CallUnary(ctx, req)
 }
 
 // ApproveFreight calls akuity.io.kargo.service.v1alpha1.KargoService.ApproveFreight.
@@ -1426,54 +1314,63 @@ func (c *kargoServiceClient) DeleteWarehouse(ctx context.Context, req *connect.R
 	return c.deleteWarehouse.CallUnary(ctx, req)
 }
 
-// RefreshWarehouse calls akuity.io.kargo.service.v1alpha1.KargoService.RefreshWarehouse.
-func (c *kargoServiceClient) RefreshWarehouse(ctx context.Context, req *connect.Request[v1alpha1.RefreshWarehouseRequest]) (*connect.Response[v1alpha1.RefreshWarehouseResponse], error) {
-	return c.refreshWarehouse.CallUnary(ctx, req)
+// CreateRepoCredentials calls akuity.io.kargo.service.v1alpha1.KargoService.CreateRepoCredentials.
+func (c *kargoServiceClient) CreateRepoCredentials(ctx context.Context, req *connect.Request[v1alpha1.CreateRepoCredentialsRequest]) (*connect.Response[v1alpha1.CreateRepoCredentialsResponse], error) {
+	return c.createRepoCredentials.CallUnary(ctx, req)
 }
 
-// CreateCredentials calls akuity.io.kargo.service.v1alpha1.KargoService.CreateCredentials.
-func (c *kargoServiceClient) CreateCredentials(ctx context.Context, req *connect.Request[v1alpha1.CreateCredentialsRequest]) (*connect.Response[v1alpha1.CreateCredentialsResponse], error) {
-	return c.createCredentials.CallUnary(ctx, req)
+// DeleteRepoCredentials calls akuity.io.kargo.service.v1alpha1.KargoService.DeleteRepoCredentials.
+func (c *kargoServiceClient) DeleteRepoCredentials(ctx context.Context, req *connect.Request[v1alpha1.DeleteRepoCredentialsRequest]) (*connect.Response[v1alpha1.DeleteRepoCredentialsResponse], error) {
+	return c.deleteRepoCredentials.CallUnary(ctx, req)
 }
 
-// DeleteCredentials calls akuity.io.kargo.service.v1alpha1.KargoService.DeleteCredentials.
-func (c *kargoServiceClient) DeleteCredentials(ctx context.Context, req *connect.Request[v1alpha1.DeleteCredentialsRequest]) (*connect.Response[v1alpha1.DeleteCredentialsResponse], error) {
-	return c.deleteCredentials.CallUnary(ctx, req)
+// GetRepoCredentials calls akuity.io.kargo.service.v1alpha1.KargoService.GetRepoCredentials.
+func (c *kargoServiceClient) GetRepoCredentials(ctx context.Context, req *connect.Request[v1alpha1.GetRepoCredentialsRequest]) (*connect.Response[v1alpha1.GetRepoCredentialsResponse], error) {
+	return c.getRepoCredentials.CallUnary(ctx, req)
 }
 
-// GetCredentials calls akuity.io.kargo.service.v1alpha1.KargoService.GetCredentials.
-func (c *kargoServiceClient) GetCredentials(ctx context.Context, req *connect.Request[v1alpha1.GetCredentialsRequest]) (*connect.Response[v1alpha1.GetCredentialsResponse], error) {
-	return c.getCredentials.CallUnary(ctx, req)
+// ListRepoCredentials calls akuity.io.kargo.service.v1alpha1.KargoService.ListRepoCredentials.
+func (c *kargoServiceClient) ListRepoCredentials(ctx context.Context, req *connect.Request[v1alpha1.ListRepoCredentialsRequest]) (*connect.Response[v1alpha1.ListRepoCredentialsResponse], error) {
+	return c.listRepoCredentials.CallUnary(ctx, req)
 }
 
-// ListCredentials calls akuity.io.kargo.service.v1alpha1.KargoService.ListCredentials.
-func (c *kargoServiceClient) ListCredentials(ctx context.Context, req *connect.Request[v1alpha1.ListCredentialsRequest]) (*connect.Response[v1alpha1.ListCredentialsResponse], error) {
-	return c.listCredentials.CallUnary(ctx, req)
+// UpdateRepoCredentials calls akuity.io.kargo.service.v1alpha1.KargoService.UpdateRepoCredentials.
+func (c *kargoServiceClient) UpdateRepoCredentials(ctx context.Context, req *connect.Request[v1alpha1.UpdateRepoCredentialsRequest]) (*connect.Response[v1alpha1.UpdateRepoCredentialsResponse], error) {
+	return c.updateRepoCredentials.CallUnary(ctx, req)
 }
 
-// UpdateCredentials calls akuity.io.kargo.service.v1alpha1.KargoService.UpdateCredentials.
-func (c *kargoServiceClient) UpdateCredentials(ctx context.Context, req *connect.Request[v1alpha1.UpdateCredentialsRequest]) (*connect.Response[v1alpha1.UpdateCredentialsResponse], error) {
-	return c.updateCredentials.CallUnary(ctx, req)
+// ListGenericCredentials calls
+// akuity.io.kargo.service.v1alpha1.KargoService.ListGenericCredentials.
+func (c *kargoServiceClient) ListGenericCredentials(ctx context.Context, req *connect.Request[v1alpha1.ListGenericCredentialsRequest]) (*connect.Response[v1alpha1.ListGenericCredentialsResponse], error) {
+	return c.listGenericCredentials.CallUnary(ctx, req)
 }
 
-// ListProjectSecrets calls akuity.io.kargo.service.v1alpha1.KargoService.ListProjectSecrets.
-func (c *kargoServiceClient) ListProjectSecrets(ctx context.Context, req *connect.Request[v1alpha1.ListProjectSecretsRequest]) (*connect.Response[v1alpha1.ListProjectSecretsResponse], error) {
-	return c.listProjectSecrets.CallUnary(ctx, req)
+// CreateGenericCredentials calls
+// akuity.io.kargo.service.v1alpha1.KargoService.CreateGenericCredentials.
+func (c *kargoServiceClient) CreateGenericCredentials(ctx context.Context, req *connect.Request[v1alpha1.CreateGenericCredentialsRequest]) (*connect.Response[v1alpha1.CreateGenericCredentialsResponse], error) {
+	return c.createGenericCredentials.CallUnary(ctx, req)
 }
 
-// CreateProjectSecret calls akuity.io.kargo.service.v1alpha1.KargoService.CreateProjectSecret.
-func (c *kargoServiceClient) CreateProjectSecret(ctx context.Context, req *connect.Request[v1alpha1.CreateProjectSecretRequest]) (*connect.Response[v1alpha1.CreateProjectSecretResponse], error) {
-	return c.createProjectSecret.CallUnary(ctx, req)
+// UpdateGenericCredentials calls
+// akuity.io.kargo.service.v1alpha1.KargoService.UpdateGenericCredentials.
+func (c *kargoServiceClient) UpdateGenericCredentials(ctx context.Context, req *connect.Request[v1alpha1.UpdateGenericCredentialsRequest]) (*connect.Response[v1alpha1.UpdateGenericCredentialsResponse], error) {
+	return c.updateGenericCredentials.CallUnary(ctx, req)
 }
 
-// UpdateProjectSecret calls akuity.io.kargo.service.v1alpha1.KargoService.UpdateProjectSecret.
-func (c *kargoServiceClient) UpdateProjectSecret(ctx context.Context, req *connect.Request[v1alpha1.UpdateProjectSecretRequest]) (*connect.Response[v1alpha1.UpdateProjectSecretResponse], error) {
-	return c.updateProjectSecret.CallUnary(ctx, req)
+// DeleteGenericCredentials calls
+// akuity.io.kargo.service.v1alpha1.KargoService.DeleteGenericCredentials.
+func (c *kargoServiceClient) DeleteGenericCredentials(ctx context.Context, req *connect.Request[v1alpha1.DeleteGenericCredentialsRequest]) (*connect.Response[v1alpha1.DeleteGenericCredentialsResponse], error) {
+	return c.deleteGenericCredentials.CallUnary(ctx, req)
 }
 
-// DeleteProjectSecret calls akuity.io.kargo.service.v1alpha1.KargoService.DeleteProjectSecret.
-func (c *kargoServiceClient) DeleteProjectSecret(ctx context.Context, req *connect.Request[v1alpha1.DeleteProjectSecretRequest]) (*connect.Response[v1alpha1.DeleteProjectSecretResponse], error) {
-	return c.deleteProjectSecret.CallUnary(ctx, req)
+// CreateConfigMap calls akuity.io.kargo.service.v1alpha1.KargoService.CreateConfigMap.
+func (c *kargoServiceClient) CreateConfigMap(ctx context.Context, req *connect.Request[v1alpha1.CreateConfigMapRequest]) (*connect.Response[v1alpha1.CreateConfigMapResponse], error) {
+	return c.createConfigMap.CallUnary(ctx, req)
+}
+
+// DeleteConfigMap calls akuity.io.kargo.service.v1alpha1.KargoService.DeleteConfigMap.
+func (c *kargoServiceClient) DeleteConfigMap(ctx context.Context, req *connect.Request[v1alpha1.DeleteConfigMapRequest]) (*connect.Response[v1alpha1.DeleteConfigMapResponse], error) {
+	return c.deleteConfigMap.CallUnary(ctx, req)
 }
 
 // ListConfigMaps calls akuity.io.kargo.service.v1alpha1.KargoService.ListConfigMaps.
@@ -1484,6 +1381,11 @@ func (c *kargoServiceClient) ListConfigMaps(ctx context.Context, req *connect.Re
 // GetConfigMap calls akuity.io.kargo.service.v1alpha1.KargoService.GetConfigMap.
 func (c *kargoServiceClient) GetConfigMap(ctx context.Context, req *connect.Request[v1alpha1.GetConfigMapRequest]) (*connect.Response[v1alpha1.GetConfigMapResponse], error) {
 	return c.getConfigMap.CallUnary(ctx, req)
+}
+
+// UpdateConfigMap calls akuity.io.kargo.service.v1alpha1.KargoService.UpdateConfigMap.
+func (c *kargoServiceClient) UpdateConfigMap(ctx context.Context, req *connect.Request[v1alpha1.UpdateConfigMapRequest]) (*connect.Response[v1alpha1.UpdateConfigMapResponse], error) {
+	return c.updateConfigMap.CallUnary(ctx, req)
 }
 
 // ListAnalysisTemplates calls akuity.io.kargo.service.v1alpha1.KargoService.ListAnalysisTemplates.
@@ -1592,68 +1494,24 @@ func (c *kargoServiceClient) UpdateRole(ctx context.Context, req *connect.Reques
 	return c.updateRole.CallUnary(ctx, req)
 }
 
-// CreateServiceAccount calls akuity.io.kargo.service.v1alpha1.KargoService.CreateServiceAccount.
-func (c *kargoServiceClient) CreateServiceAccount(ctx context.Context, req *connect.Request[v1alpha1.CreateServiceAccountRequest]) (*connect.Response[v1alpha1.CreateServiceAccountResponse], error) {
-	return c.createServiceAccount.CallUnary(ctx, req)
+// CreateAPIToken calls akuity.io.kargo.service.v1alpha1.KargoService.CreateAPIToken.
+func (c *kargoServiceClient) CreateAPIToken(ctx context.Context, req *connect.Request[v1alpha1.CreateAPITokenRequest]) (*connect.Response[v1alpha1.CreateAPITokenResponse], error) {
+	return c.createAPIToken.CallUnary(ctx, req)
 }
 
-// DeleteServiceAccount calls akuity.io.kargo.service.v1alpha1.KargoService.DeleteServiceAccount.
-func (c *kargoServiceClient) DeleteServiceAccount(ctx context.Context, req *connect.Request[v1alpha1.DeleteServiceAccountRequest]) (*connect.Response[v1alpha1.DeleteServiceAccountResponse], error) {
-	return c.deleteServiceAccount.CallUnary(ctx, req)
+// DeleteAPIToken calls akuity.io.kargo.service.v1alpha1.KargoService.DeleteAPIToken.
+func (c *kargoServiceClient) DeleteAPIToken(ctx context.Context, req *connect.Request[v1alpha1.DeleteAPITokenRequest]) (*connect.Response[v1alpha1.DeleteAPITokenResponse], error) {
+	return c.deleteAPIToken.CallUnary(ctx, req)
 }
 
-// GetServiceAccount calls akuity.io.kargo.service.v1alpha1.KargoService.GetServiceAccount.
-func (c *kargoServiceClient) GetServiceAccount(ctx context.Context, req *connect.Request[v1alpha1.GetServiceAccountRequest]) (*connect.Response[v1alpha1.GetServiceAccountResponse], error) {
-	return c.getServiceAccount.CallUnary(ctx, req)
+// GetAPIToken calls akuity.io.kargo.service.v1alpha1.KargoService.GetAPIToken.
+func (c *kargoServiceClient) GetAPIToken(ctx context.Context, req *connect.Request[v1alpha1.GetAPITokenRequest]) (*connect.Response[v1alpha1.GetAPITokenResponse], error) {
+	return c.getAPIToken.CallUnary(ctx, req)
 }
 
-// ListServiceAccounts calls akuity.io.kargo.service.v1alpha1.KargoService.ListServiceAccounts.
-func (c *kargoServiceClient) ListServiceAccounts(ctx context.Context, req *connect.Request[v1alpha1.ListServiceAccountsRequest]) (*connect.Response[v1alpha1.ListServiceAccountsResponse], error) {
-	return c.listServiceAccounts.CallUnary(ctx, req)
-}
-
-// CreateServiceAccountToken calls
-// akuity.io.kargo.service.v1alpha1.KargoService.CreateServiceAccountToken.
-func (c *kargoServiceClient) CreateServiceAccountToken(ctx context.Context, req *connect.Request[v1alpha1.CreateServiceAccountTokenRequest]) (*connect.Response[v1alpha1.CreateServiceAccountTokenResponse], error) {
-	return c.createServiceAccountToken.CallUnary(ctx, req)
-}
-
-// DeleteServiceAccountToken calls
-// akuity.io.kargo.service.v1alpha1.KargoService.DeleteServiceAccountToken.
-func (c *kargoServiceClient) DeleteServiceAccountToken(ctx context.Context, req *connect.Request[v1alpha1.DeleteServiceAccountTokenRequest]) (*connect.Response[v1alpha1.DeleteServiceAccountTokenResponse], error) {
-	return c.deleteServiceAccountToken.CallUnary(ctx, req)
-}
-
-// GetServiceAccountToken calls
-// akuity.io.kargo.service.v1alpha1.KargoService.GetServiceAccountToken.
-func (c *kargoServiceClient) GetServiceAccountToken(ctx context.Context, req *connect.Request[v1alpha1.GetServiceAccountTokenRequest]) (*connect.Response[v1alpha1.GetServiceAccountTokenResponse], error) {
-	return c.getServiceAccountToken.CallUnary(ctx, req)
-}
-
-// ListServiceAccountTokens calls
-// akuity.io.kargo.service.v1alpha1.KargoService.ListServiceAccountTokens.
-func (c *kargoServiceClient) ListServiceAccountTokens(ctx context.Context, req *connect.Request[v1alpha1.ListServiceAccountTokensRequest]) (*connect.Response[v1alpha1.ListServiceAccountTokensResponse], error) {
-	return c.listServiceAccountTokens.CallUnary(ctx, req)
-}
-
-// ListClusterSecrets calls akuity.io.kargo.service.v1alpha1.KargoService.ListClusterSecrets.
-func (c *kargoServiceClient) ListClusterSecrets(ctx context.Context, req *connect.Request[v1alpha1.ListClusterSecretsRequest]) (*connect.Response[v1alpha1.ListClusterSecretsResponse], error) {
-	return c.listClusterSecrets.CallUnary(ctx, req)
-}
-
-// CreateClusterSecret calls akuity.io.kargo.service.v1alpha1.KargoService.CreateClusterSecret.
-func (c *kargoServiceClient) CreateClusterSecret(ctx context.Context, req *connect.Request[v1alpha1.CreateClusterSecretRequest]) (*connect.Response[v1alpha1.CreateClusterSecretResponse], error) {
-	return c.createClusterSecret.CallUnary(ctx, req)
-}
-
-// UpdateClusterSecret calls akuity.io.kargo.service.v1alpha1.KargoService.UpdateClusterSecret.
-func (c *kargoServiceClient) UpdateClusterSecret(ctx context.Context, req *connect.Request[v1alpha1.UpdateClusterSecretRequest]) (*connect.Response[v1alpha1.UpdateClusterSecretResponse], error) {
-	return c.updateClusterSecret.CallUnary(ctx, req)
-}
-
-// DeleteClusterSecret calls akuity.io.kargo.service.v1alpha1.KargoService.DeleteClusterSecret.
-func (c *kargoServiceClient) DeleteClusterSecret(ctx context.Context, req *connect.Request[v1alpha1.DeleteClusterSecretRequest]) (*connect.Response[v1alpha1.DeleteClusterSecretResponse], error) {
-	return c.deleteClusterSecret.CallUnary(ctx, req)
+// ListAPITokens calls akuity.io.kargo.service.v1alpha1.KargoService.ListAPITokens.
+func (c *kargoServiceClient) ListAPITokens(ctx context.Context, req *connect.Request[v1alpha1.ListAPITokensRequest]) (*connect.Response[v1alpha1.ListAPITokensResponse], error) {
+	return c.listAPITokens.CallUnary(ctx, req)
 }
 
 // KargoServiceHandler is an implementation of the akuity.io.kargo.service.v1alpha1.KargoService
@@ -1677,6 +1535,8 @@ type KargoServiceHandler interface {
 	UpdateResource(context.Context, *connect.Request[v1alpha1.UpdateResourceRequest]) (*connect.Response[v1alpha1.UpdateResourceResponse], error)
 	// DeleteResource deletes Kubernetes resources specified in the provided manifests.
 	DeleteResource(context.Context, *connect.Request[v1alpha1.DeleteResourceRequest]) (*connect.Response[v1alpha1.DeleteResourceResponse], error)
+	// RefreshResource triggers a refresh of the specified Kargo resource.
+	RefreshResource(context.Context, *connect.Request[v1alpha1.RefreshResourceRequest]) (*connect.Response[v1alpha1.RefreshResourceResponse], error)
 	// ListStages retrieves all stages within a project.
 	ListStages(context.Context, *connect.Request[v1alpha1.ListStagesRequest]) (*connect.Response[v1alpha1.ListStagesResponse], error)
 	// ListImages returns available images and their usage across stages.
@@ -1687,16 +1547,12 @@ type KargoServiceHandler interface {
 	WatchStages(context.Context, *connect.Request[v1alpha1.WatchStagesRequest], *connect.ServerStream[v1alpha1.WatchStagesResponse]) error
 	// DeleteStage removes a stage from the system.
 	DeleteStage(context.Context, *connect.Request[v1alpha1.DeleteStageRequest]) (*connect.Response[v1alpha1.DeleteStageResponse], error)
-	// RefreshStage triggers a refresh of stage status and health checks.
-	RefreshStage(context.Context, *connect.Request[v1alpha1.RefreshStageRequest]) (*connect.Response[v1alpha1.RefreshStageResponse], error)
 	// GetClusterConfig retrieves cluster-level configuration settings.
 	GetClusterConfig(context.Context, *connect.Request[v1alpha1.GetClusterConfigRequest]) (*connect.Response[v1alpha1.GetClusterConfigResponse], error)
 	// DeleteClusterConfig removes cluster-level configuration.
 	DeleteClusterConfig(context.Context, *connect.Request[v1alpha1.DeleteClusterConfigRequest]) (*connect.Response[v1alpha1.DeleteClusterConfigResponse], error)
 	// WatchClusterConfig provides streaming updates for cluster configuration changes.
 	WatchClusterConfig(context.Context, *connect.Request[v1alpha1.WatchClusterConfigRequest], *connect.ServerStream[v1alpha1.WatchClusterConfigResponse]) error
-	// RefreshClusterConfig triggers a refresh of cluster configuration.
-	RefreshClusterConfig(context.Context, *connect.Request[v1alpha1.RefreshClusterConfigRequest]) (*connect.Response[v1alpha1.RefreshClusterConfigResponse], error)
 	// ListPromotions retrieves all promotions, optionally filtered by stage.
 	ListPromotions(context.Context, *connect.Request[v1alpha1.ListPromotionsRequest]) (*connect.Response[v1alpha1.ListPromotionsResponse], error)
 	// WatchPromotions provides streaming updates for promotion changes.
@@ -1719,8 +1575,6 @@ type KargoServiceHandler interface {
 	DeleteProjectConfig(context.Context, *connect.Request[v1alpha1.DeleteProjectConfigRequest]) (*connect.Response[v1alpha1.DeleteProjectConfigResponse], error)
 	// WatchProjectConfig provides streaming updates for project configuration changes.
 	WatchProjectConfig(context.Context, *connect.Request[v1alpha1.WatchProjectConfigRequest], *connect.ServerStream[v1alpha1.WatchProjectConfigResponse]) error
-	// RefreshProjectConfig triggers a refresh of project configuration.
-	RefreshProjectConfig(context.Context, *connect.Request[v1alpha1.RefreshProjectConfigRequest]) (*connect.Response[v1alpha1.RefreshProjectConfigResponse], error)
 	// ApproveFreight marks freight as approved for promotion to a specific stage.
 	ApproveFreight(context.Context, *connect.Request[v1alpha1.ApproveFreightRequest]) (*connect.Response[v1alpha1.ApproveFreightResponse], error)
 	// DeleteFreight removes freight from the system.
@@ -1749,30 +1603,36 @@ type KargoServiceHandler interface {
 	WatchWarehouses(context.Context, *connect.Request[v1alpha1.WatchWarehousesRequest], *connect.ServerStream[v1alpha1.WatchWarehousesResponse]) error
 	// DeleteWarehouse removes a warehouse from the system.
 	DeleteWarehouse(context.Context, *connect.Request[v1alpha1.DeleteWarehouseRequest]) (*connect.Response[v1alpha1.DeleteWarehouseResponse], error)
-	// RefreshWarehouse triggers a refresh of warehouse status and freight discovery.
-	RefreshWarehouse(context.Context, *connect.Request[v1alpha1.RefreshWarehouseRequest]) (*connect.Response[v1alpha1.RefreshWarehouseResponse], error)
-	// CreateCredentials creates new credentials for accessing external resources.
-	CreateCredentials(context.Context, *connect.Request[v1alpha1.CreateCredentialsRequest]) (*connect.Response[v1alpha1.CreateCredentialsResponse], error)
-	// DeleteCredentials removes credentials from the system.
-	DeleteCredentials(context.Context, *connect.Request[v1alpha1.DeleteCredentialsRequest]) (*connect.Response[v1alpha1.DeleteCredentialsResponse], error)
-	// GetCredentials retrieves details of specific credentials.
-	GetCredentials(context.Context, *connect.Request[v1alpha1.GetCredentialsRequest]) (*connect.Response[v1alpha1.GetCredentialsResponse], error)
-	// ListCredentials retrieves all credentials within a project.
-	ListCredentials(context.Context, *connect.Request[v1alpha1.ListCredentialsRequest]) (*connect.Response[v1alpha1.ListCredentialsResponse], error)
-	// UpdateCredentials modifies existing credentials.
-	UpdateCredentials(context.Context, *connect.Request[v1alpha1.UpdateCredentialsRequest]) (*connect.Response[v1alpha1.UpdateCredentialsResponse], error)
-	// ListProjectSecrets retrieves all secrets within a project.
-	ListProjectSecrets(context.Context, *connect.Request[v1alpha1.ListProjectSecretsRequest]) (*connect.Response[v1alpha1.ListProjectSecretsResponse], error)
-	// CreateProjectSecret creates a new secret within a project.
-	CreateProjectSecret(context.Context, *connect.Request[v1alpha1.CreateProjectSecretRequest]) (*connect.Response[v1alpha1.CreateProjectSecretResponse], error)
-	// UpdateProjectSecret modifies an existing project secret.
-	UpdateProjectSecret(context.Context, *connect.Request[v1alpha1.UpdateProjectSecretRequest]) (*connect.Response[v1alpha1.UpdateProjectSecretResponse], error)
-	// DeleteProjectSecret removes a secret from a project.
-	DeleteProjectSecret(context.Context, *connect.Request[v1alpha1.DeleteProjectSecretRequest]) (*connect.Response[v1alpha1.DeleteProjectSecretResponse], error)
+	// CreateRepoCredentials creates new credentials for accessing external repositories.
+	CreateRepoCredentials(context.Context, *connect.Request[v1alpha1.CreateRepoCredentialsRequest]) (*connect.Response[v1alpha1.CreateRepoCredentialsResponse], error)
+	// DeleteRepoCredentials removes repository credentials from the system.
+	DeleteRepoCredentials(context.Context, *connect.Request[v1alpha1.DeleteRepoCredentialsRequest]) (*connect.Response[v1alpha1.DeleteRepoCredentialsResponse], error)
+	// GetRepoCredentials retrieves details of specific repository credentials.
+	GetRepoCredentials(context.Context, *connect.Request[v1alpha1.GetRepoCredentialsRequest]) (*connect.Response[v1alpha1.GetRepoCredentialsResponse], error)
+	// ListRepoCredentials retrieves all repository credentials within a project.
+	ListRepoCredentials(context.Context, *connect.Request[v1alpha1.ListRepoCredentialsRequest]) (*connect.Response[v1alpha1.ListRepoCredentialsResponse], error)
+	// UpdateRepoCredentials modifies existing repository credentials.
+	UpdateRepoCredentials(context.Context, *connect.Request[v1alpha1.UpdateRepoCredentialsRequest]) (*connect.Response[v1alpha1.UpdateRepoCredentialsResponse], error)
+	// ListGenericCredentials retrieves all generic credentials within a project.
+	ListGenericCredentials(context.Context, *connect.Request[v1alpha1.ListGenericCredentialsRequest]) (*connect.Response[v1alpha1.ListGenericCredentialsResponse], error)
+	// CreateGenericCredentials creates new generic credentials within a project.
+	CreateGenericCredentials(context.Context, *connect.Request[v1alpha1.CreateGenericCredentialsRequest]) (*connect.Response[v1alpha1.CreateGenericCredentialsResponse], error)
+	// UpdateGenericCredentials modifies existing generic credentials.
+	UpdateGenericCredentials(context.Context, *connect.Request[v1alpha1.UpdateGenericCredentialsRequest]) (*connect.Response[v1alpha1.UpdateGenericCredentialsResponse], error)
+	// DeleteGenericCredentials removes generic credentials from a project.
+	DeleteGenericCredentials(context.Context, *connect.Request[v1alpha1.DeleteGenericCredentialsRequest]) (*connect.Response[v1alpha1.DeleteGenericCredentialsResponse], error)
+	// CreateConfigMap creates a new project-level, system-level, or shared
+	// ConfigMap.
+	CreateConfigMap(context.Context, *connect.Request[v1alpha1.CreateConfigMapRequest]) (*connect.Response[v1alpha1.CreateConfigMapResponse], error)
+	// DeleteConfigMap deletes a project-level, system-level, or shared ConfigMap.
+	DeleteConfigMap(context.Context, *connect.Request[v1alpha1.DeleteConfigMapRequest]) (*connect.Response[v1alpha1.DeleteConfigMapResponse], error)
 	// ListConfigMaps retrieves all ConfigMaps within a project.
 	ListConfigMaps(context.Context, *connect.Request[v1alpha1.ListConfigMapsRequest]) (*connect.Response[v1alpha1.ListConfigMapsResponse], error)
-	// GetConfigMap retrieves details of a specific ConfigMap.
+	// GetConfigMap retrieves details of a specific project-level, system-level,
+	// or shared ConfigMap.
 	GetConfigMap(context.Context, *connect.Request[v1alpha1.GetConfigMapRequest]) (*connect.Response[v1alpha1.GetConfigMapResponse], error)
+	// UpdateConfigMap updates a project-level, system-level, or shared ConfigMap.
+	UpdateConfigMap(context.Context, *connect.Request[v1alpha1.UpdateConfigMapRequest]) (*connect.Response[v1alpha1.UpdateConfigMapResponse], error)
 	// ListAnalysisTemplates retrieves all AnalysisTemplates within a project.
 	ListAnalysisTemplates(context.Context, *connect.Request[v1alpha1.ListAnalysisTemplatesRequest]) (*connect.Response[v1alpha1.ListAnalysisTemplatesResponse], error)
 	// GetAnalysisTemplate retrieves details of a specific AnalysisTemplate.
@@ -1808,48 +1668,32 @@ type KargoServiceHandler interface {
 	// GetRole retrieves details of a Kargo Role virtual resource or its
 	// underlying Kubernetes resources.
 	GetRole(context.Context, *connect.Request[v1alpha1.GetRoleRequest]) (*connect.Response[v1alpha1.GetRoleResponse], error)
-	// Grant assigns permissions to a Kargo Role; or binds a Kargo ServiceAccount
-	// or users having specific OIDC claims to a Kargo Role by updating its
-	// underlying Kubernetes resources.
+	// Grant assigns permissions to a Kargo Role virtual resource or binds users
+	// having specific OIDC claims to a Kargo Role virtual resource by updating
+	// its underlying Kubernetes resources.
 	Grant(context.Context, *connect.Request[v1alpha1.GrantRequest]) (*connect.Response[v1alpha1.GrantResponse], error)
 	// ListRoles retrieves details of all Kargo Role virtual resources or their
 	// underlying Kubernetes resources.
 	ListRoles(context.Context, *connect.Request[v1alpha1.ListRolesRequest]) (*connect.Response[v1alpha1.ListRolesResponse], error)
-	// Revoke removes permissions from a Kargo Role; or unbinds a Kargo
-	// ServiceAccount or users having specific OIDC claims from a Kargo Role by
+	// Revoke removes permissions from a Kargo Role virtual resource or unbinds
+	// users having specific OIDC claims from a Kargo Role virtual resource by
 	// updating its underlying Kubernetes resources.
 	Revoke(context.Context, *connect.Request[v1alpha1.RevokeRequest]) (*connect.Response[v1alpha1.RevokeResponse], error)
 	// UpdateRole modifies an existing Kargo Role virtual resource by updating its
 	// underlying Kubernetes resources.
 	UpdateRole(context.Context, *connect.Request[v1alpha1.UpdateRoleRequest]) (*connect.Response[v1alpha1.UpdateRoleResponse], error)
-	// CreateServiceAccount creates a new Kargo ServiceAccount.
-	CreateServiceAccount(context.Context, *connect.Request[v1alpha1.CreateServiceAccountRequest]) (*connect.Response[v1alpha1.CreateServiceAccountResponse], error)
-	// DeleteServiceAccount removes a Kargo ServiceAccount.
-	DeleteServiceAccount(context.Context, *connect.Request[v1alpha1.DeleteServiceAccountRequest]) (*connect.Response[v1alpha1.DeleteServiceAccountResponse], error)
-	// GetServiceAccount retrieves details of a specific Kargo ServiceAccount.
-	GetServiceAccount(context.Context, *connect.Request[v1alpha1.GetServiceAccountRequest]) (*connect.Response[v1alpha1.GetServiceAccountResponse], error)
-	// ListServiceAccounts retrieves details of all Kargo ServiceAccounts.
-	ListServiceAccounts(context.Context, *connect.Request[v1alpha1.ListServiceAccountsRequest]) (*connect.Response[v1alpha1.ListServiceAccountsResponse], error)
-	// CreateServiceAccountToken generates and returns a new bearer token
-	// associated with a Kargo ServiceAccount.
-	CreateServiceAccountToken(context.Context, *connect.Request[v1alpha1.CreateServiceAccountTokenRequest]) (*connect.Response[v1alpha1.CreateServiceAccountTokenResponse], error)
-	// DeleteServiceAccountToken deletes a bearer token associated with a
-	// Kargo ServiceAccount.
-	DeleteServiceAccountToken(context.Context, *connect.Request[v1alpha1.DeleteServiceAccountTokenRequest]) (*connect.Response[v1alpha1.DeleteServiceAccountTokenResponse], error)
-	// GetServiceAccountToken retrieves details of a specific bearer token
-	// associated with a Kargo ServiceAccount.
-	GetServiceAccountToken(context.Context, *connect.Request[v1alpha1.GetServiceAccountTokenRequest]) (*connect.Response[v1alpha1.GetServiceAccountTokenResponse], error)
-	// ListServiceAccountTokens lists bearer tokens associated with
-	// with a specified Kargo ServiceAccount.
-	ListServiceAccountTokens(context.Context, *connect.Request[v1alpha1.ListServiceAccountTokensRequest]) (*connect.Response[v1alpha1.ListServiceAccountTokensResponse], error)
-	// ListClusterSecrets retrieves all cluster-scoped secrets.
-	ListClusterSecrets(context.Context, *connect.Request[v1alpha1.ListClusterSecretsRequest]) (*connect.Response[v1alpha1.ListClusterSecretsResponse], error)
-	// CreateClusterSecret creates a new cluster-scoped secret.
-	CreateClusterSecret(context.Context, *connect.Request[v1alpha1.CreateClusterSecretRequest]) (*connect.Response[v1alpha1.CreateClusterSecretResponse], error)
-	// UpdateClusterSecret modifies an existing cluster-scoped secret.
-	UpdateClusterSecret(context.Context, *connect.Request[v1alpha1.UpdateClusterSecretRequest]) (*connect.Response[v1alpha1.UpdateClusterSecretResponse], error)
-	// DeleteClusterSecret removes a cluster-scoped secret.
-	DeleteClusterSecret(context.Context, *connect.Request[v1alpha1.DeleteClusterSecretRequest]) (*connect.Response[v1alpha1.DeleteClusterSecretResponse], error)
+	// CreateAPIToken generates and returns a new bearer token associated with a
+	// Kargo Role virtual resource.
+	CreateAPIToken(context.Context, *connect.Request[v1alpha1.CreateAPITokenRequest]) (*connect.Response[v1alpha1.CreateAPITokenResponse], error)
+	// DeleteToken deletes a bearer token associated with a Kargo Role virtual
+	// resource.
+	DeleteAPIToken(context.Context, *connect.Request[v1alpha1.DeleteAPITokenRequest]) (*connect.Response[v1alpha1.DeleteAPITokenResponse], error)
+	// GetAPIToken retrieves details of a specific bearer token associated with a
+	// Kargo Role virtual resource.
+	GetAPIToken(context.Context, *connect.Request[v1alpha1.GetAPITokenRequest]) (*connect.Response[v1alpha1.GetAPITokenResponse], error)
+	// ListAPITokens lists bearer tokens associated with with a specified Kargo
+	// Role virtual resource.
+	ListAPITokens(context.Context, *connect.Request[v1alpha1.ListAPITokensRequest]) (*connect.Response[v1alpha1.ListAPITokensResponse], error)
 }
 
 // NewKargoServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -1906,6 +1750,12 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 		connect.WithSchema(kargoServiceDeleteResourceMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	kargoServiceRefreshResourceHandler := connect.NewUnaryHandler(
+		KargoServiceRefreshResourceProcedure,
+		svc.RefreshResource,
+		connect.WithSchema(kargoServiceRefreshResourceMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	kargoServiceListStagesHandler := connect.NewUnaryHandler(
 		KargoServiceListStagesProcedure,
 		svc.ListStages,
@@ -1936,12 +1786,6 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 		connect.WithSchema(kargoServiceDeleteStageMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceRefreshStageHandler := connect.NewUnaryHandler(
-		KargoServiceRefreshStageProcedure,
-		svc.RefreshStage,
-		connect.WithSchema(kargoServiceRefreshStageMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
 	kargoServiceGetClusterConfigHandler := connect.NewUnaryHandler(
 		KargoServiceGetClusterConfigProcedure,
 		svc.GetClusterConfig,
@@ -1958,12 +1802,6 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 		KargoServiceWatchClusterConfigProcedure,
 		svc.WatchClusterConfig,
 		connect.WithSchema(kargoServiceWatchClusterConfigMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
-	kargoServiceRefreshClusterConfigHandler := connect.NewUnaryHandler(
-		KargoServiceRefreshClusterConfigProcedure,
-		svc.RefreshClusterConfig,
-		connect.WithSchema(kargoServiceRefreshClusterConfigMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	kargoServiceListPromotionsHandler := connect.NewUnaryHandler(
@@ -2030,12 +1868,6 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 		KargoServiceWatchProjectConfigProcedure,
 		svc.WatchProjectConfig,
 		connect.WithSchema(kargoServiceWatchProjectConfigMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
-	kargoServiceRefreshProjectConfigHandler := connect.NewUnaryHandler(
-		KargoServiceRefreshProjectConfigProcedure,
-		svc.RefreshProjectConfig,
-		connect.WithSchema(kargoServiceRefreshProjectConfigMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	kargoServiceApproveFreightHandler := connect.NewUnaryHandler(
@@ -2122,64 +1954,70 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 		connect.WithSchema(kargoServiceDeleteWarehouseMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceRefreshWarehouseHandler := connect.NewUnaryHandler(
-		KargoServiceRefreshWarehouseProcedure,
-		svc.RefreshWarehouse,
-		connect.WithSchema(kargoServiceRefreshWarehouseMethodDescriptor),
+	kargoServiceCreateRepoCredentialsHandler := connect.NewUnaryHandler(
+		KargoServiceCreateRepoCredentialsProcedure,
+		svc.CreateRepoCredentials,
+		connect.WithSchema(kargoServiceCreateRepoCredentialsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceCreateCredentialsHandler := connect.NewUnaryHandler(
-		KargoServiceCreateCredentialsProcedure,
-		svc.CreateCredentials,
-		connect.WithSchema(kargoServiceCreateCredentialsMethodDescriptor),
+	kargoServiceDeleteRepoCredentialsHandler := connect.NewUnaryHandler(
+		KargoServiceDeleteRepoCredentialsProcedure,
+		svc.DeleteRepoCredentials,
+		connect.WithSchema(kargoServiceDeleteRepoCredentialsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceDeleteCredentialsHandler := connect.NewUnaryHandler(
-		KargoServiceDeleteCredentialsProcedure,
-		svc.DeleteCredentials,
-		connect.WithSchema(kargoServiceDeleteCredentialsMethodDescriptor),
+	kargoServiceGetRepoCredentialsHandler := connect.NewUnaryHandler(
+		KargoServiceGetRepoCredentialsProcedure,
+		svc.GetRepoCredentials,
+		connect.WithSchema(kargoServiceGetRepoCredentialsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceGetCredentialsHandler := connect.NewUnaryHandler(
-		KargoServiceGetCredentialsProcedure,
-		svc.GetCredentials,
-		connect.WithSchema(kargoServiceGetCredentialsMethodDescriptor),
+	kargoServiceListRepoCredentialsHandler := connect.NewUnaryHandler(
+		KargoServiceListRepoCredentialsProcedure,
+		svc.ListRepoCredentials,
+		connect.WithSchema(kargoServiceListRepoCredentialsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceListCredentialsHandler := connect.NewUnaryHandler(
-		KargoServiceListCredentialsProcedure,
-		svc.ListCredentials,
-		connect.WithSchema(kargoServiceListCredentialsMethodDescriptor),
+	kargoServiceUpdateRepoCredentialsHandler := connect.NewUnaryHandler(
+		KargoServiceUpdateRepoCredentialsProcedure,
+		svc.UpdateRepoCredentials,
+		connect.WithSchema(kargoServiceUpdateRepoCredentialsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceUpdateCredentialsHandler := connect.NewUnaryHandler(
-		KargoServiceUpdateCredentialsProcedure,
-		svc.UpdateCredentials,
-		connect.WithSchema(kargoServiceUpdateCredentialsMethodDescriptor),
+	kargoServiceListGenericCredentialsHandler := connect.NewUnaryHandler(
+		KargoServiceListGenericCredentialsProcedure,
+		svc.ListGenericCredentials,
+		connect.WithSchema(kargoServiceListGenericCredentialsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceListProjectSecretsHandler := connect.NewUnaryHandler(
-		KargoServiceListProjectSecretsProcedure,
-		svc.ListProjectSecrets,
-		connect.WithSchema(kargoServiceListProjectSecretsMethodDescriptor),
+	kargoServiceCreateGenericCredentialsHandler := connect.NewUnaryHandler(
+		KargoServiceCreateGenericCredentialsProcedure,
+		svc.CreateGenericCredentials,
+		connect.WithSchema(kargoServiceCreateGenericCredentialsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceCreateProjectSecretHandler := connect.NewUnaryHandler(
-		KargoServiceCreateProjectSecretProcedure,
-		svc.CreateProjectSecret,
-		connect.WithSchema(kargoServiceCreateProjectSecretMethodDescriptor),
+	kargoServiceUpdateGenericCredentialsHandler := connect.NewUnaryHandler(
+		KargoServiceUpdateGenericCredentialsProcedure,
+		svc.UpdateGenericCredentials,
+		connect.WithSchema(kargoServiceUpdateGenericCredentialsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceUpdateProjectSecretHandler := connect.NewUnaryHandler(
-		KargoServiceUpdateProjectSecretProcedure,
-		svc.UpdateProjectSecret,
-		connect.WithSchema(kargoServiceUpdateProjectSecretMethodDescriptor),
+	kargoServiceDeleteGenericCredentialsHandler := connect.NewUnaryHandler(
+		KargoServiceDeleteGenericCredentialsProcedure,
+		svc.DeleteGenericCredentials,
+		connect.WithSchema(kargoServiceDeleteGenericCredentialsMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceDeleteProjectSecretHandler := connect.NewUnaryHandler(
-		KargoServiceDeleteProjectSecretProcedure,
-		svc.DeleteProjectSecret,
-		connect.WithSchema(kargoServiceDeleteProjectSecretMethodDescriptor),
+	kargoServiceCreateConfigMapHandler := connect.NewUnaryHandler(
+		KargoServiceCreateConfigMapProcedure,
+		svc.CreateConfigMap,
+		connect.WithSchema(kargoServiceCreateConfigMapMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	kargoServiceDeleteConfigMapHandler := connect.NewUnaryHandler(
+		KargoServiceDeleteConfigMapProcedure,
+		svc.DeleteConfigMap,
+		connect.WithSchema(kargoServiceDeleteConfigMapMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	kargoServiceListConfigMapsHandler := connect.NewUnaryHandler(
@@ -2192,6 +2030,12 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 		KargoServiceGetConfigMapProcedure,
 		svc.GetConfigMap,
 		connect.WithSchema(kargoServiceGetConfigMapMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	kargoServiceUpdateConfigMapHandler := connect.NewUnaryHandler(
+		KargoServiceUpdateConfigMapProcedure,
+		svc.UpdateConfigMap,
+		connect.WithSchema(kargoServiceUpdateConfigMapMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	kargoServiceListAnalysisTemplatesHandler := connect.NewUnaryHandler(
@@ -2314,76 +2158,28 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 		connect.WithSchema(kargoServiceUpdateRoleMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceCreateServiceAccountHandler := connect.NewUnaryHandler(
-		KargoServiceCreateServiceAccountProcedure,
-		svc.CreateServiceAccount,
-		connect.WithSchema(kargoServiceCreateServiceAccountMethodDescriptor),
+	kargoServiceCreateAPITokenHandler := connect.NewUnaryHandler(
+		KargoServiceCreateAPITokenProcedure,
+		svc.CreateAPIToken,
+		connect.WithSchema(kargoServiceCreateAPITokenMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceDeleteServiceAccountHandler := connect.NewUnaryHandler(
-		KargoServiceDeleteServiceAccountProcedure,
-		svc.DeleteServiceAccount,
-		connect.WithSchema(kargoServiceDeleteServiceAccountMethodDescriptor),
+	kargoServiceDeleteAPITokenHandler := connect.NewUnaryHandler(
+		KargoServiceDeleteAPITokenProcedure,
+		svc.DeleteAPIToken,
+		connect.WithSchema(kargoServiceDeleteAPITokenMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceGetServiceAccountHandler := connect.NewUnaryHandler(
-		KargoServiceGetServiceAccountProcedure,
-		svc.GetServiceAccount,
-		connect.WithSchema(kargoServiceGetServiceAccountMethodDescriptor),
+	kargoServiceGetAPITokenHandler := connect.NewUnaryHandler(
+		KargoServiceGetAPITokenProcedure,
+		svc.GetAPIToken,
+		connect.WithSchema(kargoServiceGetAPITokenMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
-	kargoServiceListServiceAccountsHandler := connect.NewUnaryHandler(
-		KargoServiceListServiceAccountsProcedure,
-		svc.ListServiceAccounts,
-		connect.WithSchema(kargoServiceListServiceAccountsMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
-	kargoServiceCreateServiceAccountTokenHandler := connect.NewUnaryHandler(
-		KargoServiceCreateServiceAccountTokenProcedure,
-		svc.CreateServiceAccountToken,
-		connect.WithSchema(kargoServiceCreateServiceAccountTokenMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
-	kargoServiceDeleteServiceAccountTokenHandler := connect.NewUnaryHandler(
-		KargoServiceDeleteServiceAccountTokenProcedure,
-		svc.DeleteServiceAccountToken,
-		connect.WithSchema(kargoServiceDeleteServiceAccountTokenMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
-	kargoServiceGetServiceAccountTokenHandler := connect.NewUnaryHandler(
-		KargoServiceGetServiceAccountTokenProcedure,
-		svc.GetServiceAccountToken,
-		connect.WithSchema(kargoServiceGetServiceAccountTokenMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
-	kargoServiceListServiceAccountTokensHandler := connect.NewUnaryHandler(
-		KargoServiceListServiceAccountTokensProcedure,
-		svc.ListServiceAccountTokens,
-		connect.WithSchema(kargoServiceListServiceAccountTokensMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
-	kargoServiceListClusterSecretsHandler := connect.NewUnaryHandler(
-		KargoServiceListClusterSecretsProcedure,
-		svc.ListClusterSecrets,
-		connect.WithSchema(kargoServiceListClusterSecretsMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
-	kargoServiceCreateClusterSecretHandler := connect.NewUnaryHandler(
-		KargoServiceCreateClusterSecretProcedure,
-		svc.CreateClusterSecret,
-		connect.WithSchema(kargoServiceCreateClusterSecretMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
-	kargoServiceUpdateClusterSecretHandler := connect.NewUnaryHandler(
-		KargoServiceUpdateClusterSecretProcedure,
-		svc.UpdateClusterSecret,
-		connect.WithSchema(kargoServiceUpdateClusterSecretMethodDescriptor),
-		connect.WithHandlerOptions(opts...),
-	)
-	kargoServiceDeleteClusterSecretHandler := connect.NewUnaryHandler(
-		KargoServiceDeleteClusterSecretProcedure,
-		svc.DeleteClusterSecret,
-		connect.WithSchema(kargoServiceDeleteClusterSecretMethodDescriptor),
+	kargoServiceListAPITokensHandler := connect.NewUnaryHandler(
+		KargoServiceListAPITokensProcedure,
+		svc.ListAPITokens,
+		connect.WithSchema(kargoServiceListAPITokensMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/akuity.io.kargo.service.v1alpha1.KargoService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -2404,6 +2200,8 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 			kargoServiceUpdateResourceHandler.ServeHTTP(w, r)
 		case KargoServiceDeleteResourceProcedure:
 			kargoServiceDeleteResourceHandler.ServeHTTP(w, r)
+		case KargoServiceRefreshResourceProcedure:
+			kargoServiceRefreshResourceHandler.ServeHTTP(w, r)
 		case KargoServiceListStagesProcedure:
 			kargoServiceListStagesHandler.ServeHTTP(w, r)
 		case KargoServiceListImagesProcedure:
@@ -2414,16 +2212,12 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 			kargoServiceWatchStagesHandler.ServeHTTP(w, r)
 		case KargoServiceDeleteStageProcedure:
 			kargoServiceDeleteStageHandler.ServeHTTP(w, r)
-		case KargoServiceRefreshStageProcedure:
-			kargoServiceRefreshStageHandler.ServeHTTP(w, r)
 		case KargoServiceGetClusterConfigProcedure:
 			kargoServiceGetClusterConfigHandler.ServeHTTP(w, r)
 		case KargoServiceDeleteClusterConfigProcedure:
 			kargoServiceDeleteClusterConfigHandler.ServeHTTP(w, r)
 		case KargoServiceWatchClusterConfigProcedure:
 			kargoServiceWatchClusterConfigHandler.ServeHTTP(w, r)
-		case KargoServiceRefreshClusterConfigProcedure:
-			kargoServiceRefreshClusterConfigHandler.ServeHTTP(w, r)
 		case KargoServiceListPromotionsProcedure:
 			kargoServiceListPromotionsHandler.ServeHTTP(w, r)
 		case KargoServiceWatchPromotionsProcedure:
@@ -2446,8 +2240,6 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 			kargoServiceDeleteProjectConfigHandler.ServeHTTP(w, r)
 		case KargoServiceWatchProjectConfigProcedure:
 			kargoServiceWatchProjectConfigHandler.ServeHTTP(w, r)
-		case KargoServiceRefreshProjectConfigProcedure:
-			kargoServiceRefreshProjectConfigHandler.ServeHTTP(w, r)
 		case KargoServiceApproveFreightProcedure:
 			kargoServiceApproveFreightHandler.ServeHTTP(w, r)
 		case KargoServiceDeleteFreightProcedure:
@@ -2476,30 +2268,34 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 			kargoServiceWatchWarehousesHandler.ServeHTTP(w, r)
 		case KargoServiceDeleteWarehouseProcedure:
 			kargoServiceDeleteWarehouseHandler.ServeHTTP(w, r)
-		case KargoServiceRefreshWarehouseProcedure:
-			kargoServiceRefreshWarehouseHandler.ServeHTTP(w, r)
-		case KargoServiceCreateCredentialsProcedure:
-			kargoServiceCreateCredentialsHandler.ServeHTTP(w, r)
-		case KargoServiceDeleteCredentialsProcedure:
-			kargoServiceDeleteCredentialsHandler.ServeHTTP(w, r)
-		case KargoServiceGetCredentialsProcedure:
-			kargoServiceGetCredentialsHandler.ServeHTTP(w, r)
-		case KargoServiceListCredentialsProcedure:
-			kargoServiceListCredentialsHandler.ServeHTTP(w, r)
-		case KargoServiceUpdateCredentialsProcedure:
-			kargoServiceUpdateCredentialsHandler.ServeHTTP(w, r)
-		case KargoServiceListProjectSecretsProcedure:
-			kargoServiceListProjectSecretsHandler.ServeHTTP(w, r)
-		case KargoServiceCreateProjectSecretProcedure:
-			kargoServiceCreateProjectSecretHandler.ServeHTTP(w, r)
-		case KargoServiceUpdateProjectSecretProcedure:
-			kargoServiceUpdateProjectSecretHandler.ServeHTTP(w, r)
-		case KargoServiceDeleteProjectSecretProcedure:
-			kargoServiceDeleteProjectSecretHandler.ServeHTTP(w, r)
+		case KargoServiceCreateRepoCredentialsProcedure:
+			kargoServiceCreateRepoCredentialsHandler.ServeHTTP(w, r)
+		case KargoServiceDeleteRepoCredentialsProcedure:
+			kargoServiceDeleteRepoCredentialsHandler.ServeHTTP(w, r)
+		case KargoServiceGetRepoCredentialsProcedure:
+			kargoServiceGetRepoCredentialsHandler.ServeHTTP(w, r)
+		case KargoServiceListRepoCredentialsProcedure:
+			kargoServiceListRepoCredentialsHandler.ServeHTTP(w, r)
+		case KargoServiceUpdateRepoCredentialsProcedure:
+			kargoServiceUpdateRepoCredentialsHandler.ServeHTTP(w, r)
+		case KargoServiceListGenericCredentialsProcedure:
+			kargoServiceListGenericCredentialsHandler.ServeHTTP(w, r)
+		case KargoServiceCreateGenericCredentialsProcedure:
+			kargoServiceCreateGenericCredentialsHandler.ServeHTTP(w, r)
+		case KargoServiceUpdateGenericCredentialsProcedure:
+			kargoServiceUpdateGenericCredentialsHandler.ServeHTTP(w, r)
+		case KargoServiceDeleteGenericCredentialsProcedure:
+			kargoServiceDeleteGenericCredentialsHandler.ServeHTTP(w, r)
+		case KargoServiceCreateConfigMapProcedure:
+			kargoServiceCreateConfigMapHandler.ServeHTTP(w, r)
+		case KargoServiceDeleteConfigMapProcedure:
+			kargoServiceDeleteConfigMapHandler.ServeHTTP(w, r)
 		case KargoServiceListConfigMapsProcedure:
 			kargoServiceListConfigMapsHandler.ServeHTTP(w, r)
 		case KargoServiceGetConfigMapProcedure:
 			kargoServiceGetConfigMapHandler.ServeHTTP(w, r)
+		case KargoServiceUpdateConfigMapProcedure:
+			kargoServiceUpdateConfigMapHandler.ServeHTTP(w, r)
 		case KargoServiceListAnalysisTemplatesProcedure:
 			kargoServiceListAnalysisTemplatesHandler.ServeHTTP(w, r)
 		case KargoServiceGetAnalysisTemplateProcedure:
@@ -2540,30 +2336,14 @@ func NewKargoServiceHandler(svc KargoServiceHandler, opts ...connect.HandlerOpti
 			kargoServiceRevokeHandler.ServeHTTP(w, r)
 		case KargoServiceUpdateRoleProcedure:
 			kargoServiceUpdateRoleHandler.ServeHTTP(w, r)
-		case KargoServiceCreateServiceAccountProcedure:
-			kargoServiceCreateServiceAccountHandler.ServeHTTP(w, r)
-		case KargoServiceDeleteServiceAccountProcedure:
-			kargoServiceDeleteServiceAccountHandler.ServeHTTP(w, r)
-		case KargoServiceGetServiceAccountProcedure:
-			kargoServiceGetServiceAccountHandler.ServeHTTP(w, r)
-		case KargoServiceListServiceAccountsProcedure:
-			kargoServiceListServiceAccountsHandler.ServeHTTP(w, r)
-		case KargoServiceCreateServiceAccountTokenProcedure:
-			kargoServiceCreateServiceAccountTokenHandler.ServeHTTP(w, r)
-		case KargoServiceDeleteServiceAccountTokenProcedure:
-			kargoServiceDeleteServiceAccountTokenHandler.ServeHTTP(w, r)
-		case KargoServiceGetServiceAccountTokenProcedure:
-			kargoServiceGetServiceAccountTokenHandler.ServeHTTP(w, r)
-		case KargoServiceListServiceAccountTokensProcedure:
-			kargoServiceListServiceAccountTokensHandler.ServeHTTP(w, r)
-		case KargoServiceListClusterSecretsProcedure:
-			kargoServiceListClusterSecretsHandler.ServeHTTP(w, r)
-		case KargoServiceCreateClusterSecretProcedure:
-			kargoServiceCreateClusterSecretHandler.ServeHTTP(w, r)
-		case KargoServiceUpdateClusterSecretProcedure:
-			kargoServiceUpdateClusterSecretHandler.ServeHTTP(w, r)
-		case KargoServiceDeleteClusterSecretProcedure:
-			kargoServiceDeleteClusterSecretHandler.ServeHTTP(w, r)
+		case KargoServiceCreateAPITokenProcedure:
+			kargoServiceCreateAPITokenHandler.ServeHTTP(w, r)
+		case KargoServiceDeleteAPITokenProcedure:
+			kargoServiceDeleteAPITokenHandler.ServeHTTP(w, r)
+		case KargoServiceGetAPITokenProcedure:
+			kargoServiceGetAPITokenHandler.ServeHTTP(w, r)
+		case KargoServiceListAPITokensProcedure:
+			kargoServiceListAPITokensHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -2605,6 +2385,10 @@ func (UnimplementedKargoServiceHandler) DeleteResource(context.Context, *connect
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteResource is not implemented"))
 }
 
+func (UnimplementedKargoServiceHandler) RefreshResource(context.Context, *connect.Request[v1alpha1.RefreshResourceRequest]) (*connect.Response[v1alpha1.RefreshResourceResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.RefreshResource is not implemented"))
+}
+
 func (UnimplementedKargoServiceHandler) ListStages(context.Context, *connect.Request[v1alpha1.ListStagesRequest]) (*connect.Response[v1alpha1.ListStagesResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.ListStages is not implemented"))
 }
@@ -2625,10 +2409,6 @@ func (UnimplementedKargoServiceHandler) DeleteStage(context.Context, *connect.Re
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteStage is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) RefreshStage(context.Context, *connect.Request[v1alpha1.RefreshStageRequest]) (*connect.Response[v1alpha1.RefreshStageResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.RefreshStage is not implemented"))
-}
-
 func (UnimplementedKargoServiceHandler) GetClusterConfig(context.Context, *connect.Request[v1alpha1.GetClusterConfigRequest]) (*connect.Response[v1alpha1.GetClusterConfigResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.GetClusterConfig is not implemented"))
 }
@@ -2639,10 +2419,6 @@ func (UnimplementedKargoServiceHandler) DeleteClusterConfig(context.Context, *co
 
 func (UnimplementedKargoServiceHandler) WatchClusterConfig(context.Context, *connect.Request[v1alpha1.WatchClusterConfigRequest], *connect.ServerStream[v1alpha1.WatchClusterConfigResponse]) error {
 	return connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.WatchClusterConfig is not implemented"))
-}
-
-func (UnimplementedKargoServiceHandler) RefreshClusterConfig(context.Context, *connect.Request[v1alpha1.RefreshClusterConfigRequest]) (*connect.Response[v1alpha1.RefreshClusterConfigResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.RefreshClusterConfig is not implemented"))
 }
 
 func (UnimplementedKargoServiceHandler) ListPromotions(context.Context, *connect.Request[v1alpha1.ListPromotionsRequest]) (*connect.Response[v1alpha1.ListPromotionsResponse], error) {
@@ -2687,10 +2463,6 @@ func (UnimplementedKargoServiceHandler) DeleteProjectConfig(context.Context, *co
 
 func (UnimplementedKargoServiceHandler) WatchProjectConfig(context.Context, *connect.Request[v1alpha1.WatchProjectConfigRequest], *connect.ServerStream[v1alpha1.WatchProjectConfigResponse]) error {
 	return connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.WatchProjectConfig is not implemented"))
-}
-
-func (UnimplementedKargoServiceHandler) RefreshProjectConfig(context.Context, *connect.Request[v1alpha1.RefreshProjectConfigRequest]) (*connect.Response[v1alpha1.RefreshProjectConfigResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.RefreshProjectConfig is not implemented"))
 }
 
 func (UnimplementedKargoServiceHandler) ApproveFreight(context.Context, *connect.Request[v1alpha1.ApproveFreightRequest]) (*connect.Response[v1alpha1.ApproveFreightResponse], error) {
@@ -2749,44 +2521,48 @@ func (UnimplementedKargoServiceHandler) DeleteWarehouse(context.Context, *connec
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteWarehouse is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) RefreshWarehouse(context.Context, *connect.Request[v1alpha1.RefreshWarehouseRequest]) (*connect.Response[v1alpha1.RefreshWarehouseResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.RefreshWarehouse is not implemented"))
+func (UnimplementedKargoServiceHandler) CreateRepoCredentials(context.Context, *connect.Request[v1alpha1.CreateRepoCredentialsRequest]) (*connect.Response[v1alpha1.CreateRepoCredentialsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.CreateRepoCredentials is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) CreateCredentials(context.Context, *connect.Request[v1alpha1.CreateCredentialsRequest]) (*connect.Response[v1alpha1.CreateCredentialsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.CreateCredentials is not implemented"))
+func (UnimplementedKargoServiceHandler) DeleteRepoCredentials(context.Context, *connect.Request[v1alpha1.DeleteRepoCredentialsRequest]) (*connect.Response[v1alpha1.DeleteRepoCredentialsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteRepoCredentials is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) DeleteCredentials(context.Context, *connect.Request[v1alpha1.DeleteCredentialsRequest]) (*connect.Response[v1alpha1.DeleteCredentialsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteCredentials is not implemented"))
+func (UnimplementedKargoServiceHandler) GetRepoCredentials(context.Context, *connect.Request[v1alpha1.GetRepoCredentialsRequest]) (*connect.Response[v1alpha1.GetRepoCredentialsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.GetRepoCredentials is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) GetCredentials(context.Context, *connect.Request[v1alpha1.GetCredentialsRequest]) (*connect.Response[v1alpha1.GetCredentialsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.GetCredentials is not implemented"))
+func (UnimplementedKargoServiceHandler) ListRepoCredentials(context.Context, *connect.Request[v1alpha1.ListRepoCredentialsRequest]) (*connect.Response[v1alpha1.ListRepoCredentialsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.ListRepoCredentials is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) ListCredentials(context.Context, *connect.Request[v1alpha1.ListCredentialsRequest]) (*connect.Response[v1alpha1.ListCredentialsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.ListCredentials is not implemented"))
+func (UnimplementedKargoServiceHandler) UpdateRepoCredentials(context.Context, *connect.Request[v1alpha1.UpdateRepoCredentialsRequest]) (*connect.Response[v1alpha1.UpdateRepoCredentialsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.UpdateRepoCredentials is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) UpdateCredentials(context.Context, *connect.Request[v1alpha1.UpdateCredentialsRequest]) (*connect.Response[v1alpha1.UpdateCredentialsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.UpdateCredentials is not implemented"))
+func (UnimplementedKargoServiceHandler) ListGenericCredentials(context.Context, *connect.Request[v1alpha1.ListGenericCredentialsRequest]) (*connect.Response[v1alpha1.ListGenericCredentialsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.ListGenericCredentials is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) ListProjectSecrets(context.Context, *connect.Request[v1alpha1.ListProjectSecretsRequest]) (*connect.Response[v1alpha1.ListProjectSecretsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.ListProjectSecrets is not implemented"))
+func (UnimplementedKargoServiceHandler) CreateGenericCredentials(context.Context, *connect.Request[v1alpha1.CreateGenericCredentialsRequest]) (*connect.Response[v1alpha1.CreateGenericCredentialsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.CreateGenericCredentials is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) CreateProjectSecret(context.Context, *connect.Request[v1alpha1.CreateProjectSecretRequest]) (*connect.Response[v1alpha1.CreateProjectSecretResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.CreateProjectSecret is not implemented"))
+func (UnimplementedKargoServiceHandler) UpdateGenericCredentials(context.Context, *connect.Request[v1alpha1.UpdateGenericCredentialsRequest]) (*connect.Response[v1alpha1.UpdateGenericCredentialsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.UpdateGenericCredentials is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) UpdateProjectSecret(context.Context, *connect.Request[v1alpha1.UpdateProjectSecretRequest]) (*connect.Response[v1alpha1.UpdateProjectSecretResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.UpdateProjectSecret is not implemented"))
+func (UnimplementedKargoServiceHandler) DeleteGenericCredentials(context.Context, *connect.Request[v1alpha1.DeleteGenericCredentialsRequest]) (*connect.Response[v1alpha1.DeleteGenericCredentialsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteGenericCredentials is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) DeleteProjectSecret(context.Context, *connect.Request[v1alpha1.DeleteProjectSecretRequest]) (*connect.Response[v1alpha1.DeleteProjectSecretResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteProjectSecret is not implemented"))
+func (UnimplementedKargoServiceHandler) CreateConfigMap(context.Context, *connect.Request[v1alpha1.CreateConfigMapRequest]) (*connect.Response[v1alpha1.CreateConfigMapResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.CreateConfigMap is not implemented"))
+}
+
+func (UnimplementedKargoServiceHandler) DeleteConfigMap(context.Context, *connect.Request[v1alpha1.DeleteConfigMapRequest]) (*connect.Response[v1alpha1.DeleteConfigMapResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteConfigMap is not implemented"))
 }
 
 func (UnimplementedKargoServiceHandler) ListConfigMaps(context.Context, *connect.Request[v1alpha1.ListConfigMapsRequest]) (*connect.Response[v1alpha1.ListConfigMapsResponse], error) {
@@ -2795,6 +2571,10 @@ func (UnimplementedKargoServiceHandler) ListConfigMaps(context.Context, *connect
 
 func (UnimplementedKargoServiceHandler) GetConfigMap(context.Context, *connect.Request[v1alpha1.GetConfigMapRequest]) (*connect.Response[v1alpha1.GetConfigMapResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.GetConfigMap is not implemented"))
+}
+
+func (UnimplementedKargoServiceHandler) UpdateConfigMap(context.Context, *connect.Request[v1alpha1.UpdateConfigMapRequest]) (*connect.Response[v1alpha1.UpdateConfigMapResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.UpdateConfigMap is not implemented"))
 }
 
 func (UnimplementedKargoServiceHandler) ListAnalysisTemplates(context.Context, *connect.Request[v1alpha1.ListAnalysisTemplatesRequest]) (*connect.Response[v1alpha1.ListAnalysisTemplatesResponse], error) {
@@ -2877,50 +2657,18 @@ func (UnimplementedKargoServiceHandler) UpdateRole(context.Context, *connect.Req
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.UpdateRole is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) CreateServiceAccount(context.Context, *connect.Request[v1alpha1.CreateServiceAccountRequest]) (*connect.Response[v1alpha1.CreateServiceAccountResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.CreateServiceAccount is not implemented"))
+func (UnimplementedKargoServiceHandler) CreateAPIToken(context.Context, *connect.Request[v1alpha1.CreateAPITokenRequest]) (*connect.Response[v1alpha1.CreateAPITokenResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.CreateAPIToken is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) DeleteServiceAccount(context.Context, *connect.Request[v1alpha1.DeleteServiceAccountRequest]) (*connect.Response[v1alpha1.DeleteServiceAccountResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteServiceAccount is not implemented"))
+func (UnimplementedKargoServiceHandler) DeleteAPIToken(context.Context, *connect.Request[v1alpha1.DeleteAPITokenRequest]) (*connect.Response[v1alpha1.DeleteAPITokenResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteAPIToken is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) GetServiceAccount(context.Context, *connect.Request[v1alpha1.GetServiceAccountRequest]) (*connect.Response[v1alpha1.GetServiceAccountResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.GetServiceAccount is not implemented"))
+func (UnimplementedKargoServiceHandler) GetAPIToken(context.Context, *connect.Request[v1alpha1.GetAPITokenRequest]) (*connect.Response[v1alpha1.GetAPITokenResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.GetAPIToken is not implemented"))
 }
 
-func (UnimplementedKargoServiceHandler) ListServiceAccounts(context.Context, *connect.Request[v1alpha1.ListServiceAccountsRequest]) (*connect.Response[v1alpha1.ListServiceAccountsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.ListServiceAccounts is not implemented"))
-}
-
-func (UnimplementedKargoServiceHandler) CreateServiceAccountToken(context.Context, *connect.Request[v1alpha1.CreateServiceAccountTokenRequest]) (*connect.Response[v1alpha1.CreateServiceAccountTokenResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.CreateServiceAccountToken is not implemented"))
-}
-
-func (UnimplementedKargoServiceHandler) DeleteServiceAccountToken(context.Context, *connect.Request[v1alpha1.DeleteServiceAccountTokenRequest]) (*connect.Response[v1alpha1.DeleteServiceAccountTokenResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteServiceAccountToken is not implemented"))
-}
-
-func (UnimplementedKargoServiceHandler) GetServiceAccountToken(context.Context, *connect.Request[v1alpha1.GetServiceAccountTokenRequest]) (*connect.Response[v1alpha1.GetServiceAccountTokenResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.GetServiceAccountToken is not implemented"))
-}
-
-func (UnimplementedKargoServiceHandler) ListServiceAccountTokens(context.Context, *connect.Request[v1alpha1.ListServiceAccountTokensRequest]) (*connect.Response[v1alpha1.ListServiceAccountTokensResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.ListServiceAccountTokens is not implemented"))
-}
-
-func (UnimplementedKargoServiceHandler) ListClusterSecrets(context.Context, *connect.Request[v1alpha1.ListClusterSecretsRequest]) (*connect.Response[v1alpha1.ListClusterSecretsResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.ListClusterSecrets is not implemented"))
-}
-
-func (UnimplementedKargoServiceHandler) CreateClusterSecret(context.Context, *connect.Request[v1alpha1.CreateClusterSecretRequest]) (*connect.Response[v1alpha1.CreateClusterSecretResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.CreateClusterSecret is not implemented"))
-}
-
-func (UnimplementedKargoServiceHandler) UpdateClusterSecret(context.Context, *connect.Request[v1alpha1.UpdateClusterSecretRequest]) (*connect.Response[v1alpha1.UpdateClusterSecretResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.UpdateClusterSecret is not implemented"))
-}
-
-func (UnimplementedKargoServiceHandler) DeleteClusterSecret(context.Context, *connect.Request[v1alpha1.DeleteClusterSecretRequest]) (*connect.Response[v1alpha1.DeleteClusterSecretResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.DeleteClusterSecret is not implemented"))
+func (UnimplementedKargoServiceHandler) ListAPITokens(context.Context, *connect.Request[v1alpha1.ListAPITokensRequest]) (*connect.Response[v1alpha1.ListAPITokensResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("akuity.io.kargo.service.v1alpha1.KargoService.ListAPITokens is not implemented"))
 }

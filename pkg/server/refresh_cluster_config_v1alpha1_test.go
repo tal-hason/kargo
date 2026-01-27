@@ -1,99 +1,52 @@
 package server
 
 import (
-	"context"
+	"net/http"
+	"net/http/httptest"
 	"testing"
-	"time"
 
-	"connectrpc.com/connect"
 	"github.com/stretchr/testify/require"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/client-go/rest"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 
-	svcv1alpha1 "github.com/akuity/kargo/api/service/v1alpha1"
 	kargoapi "github.com/akuity/kargo/api/v1alpha1"
 	"github.com/akuity/kargo/pkg/api"
-	"github.com/akuity/kargo/pkg/server/kubernetes"
+	"github.com/akuity/kargo/pkg/server/config"
 )
 
-func TestRefreshClusterConfig(t *testing.T) {
-	testSets := map[string]struct {
-		req        *svcv1alpha1.RefreshClusterConfigRequest
-		objects    []client.Object
-		assertions func(*testing.T, *connect.Response[svcv1alpha1.RefreshClusterConfigResponse], error)
-	}{
-		"non-existing ClusterConfig": {
-			req:     &svcv1alpha1.RefreshClusterConfigRequest{},
-			objects: []client.Object{},
-			assertions: func(t *testing.T, r *connect.Response[svcv1alpha1.RefreshClusterConfigResponse], err error) {
-				require.Error(t, err)
-				require.Equal(t, connect.CodeNotFound, connect.CodeOf(err))
-				require.Nil(t, r)
-			},
-		},
-		"existing ClusterConfig": {
-			req: &svcv1alpha1.RefreshClusterConfigRequest{},
-			objects: []client.Object{
-				&kargoapi.ClusterConfig{
-					TypeMeta: metav1.TypeMeta{
-						Kind:       "ClusterConfig",
-						APIVersion: kargoapi.GroupVersion.String(),
-					},
-					ObjectMeta: metav1.ObjectMeta{
-						Name: api.ClusterConfigName,
-					},
+func Test_server_refreshClusterConfig(t *testing.T) {
+	testConfig := &kargoapi.ClusterConfig{
+		ObjectMeta: metav1.ObjectMeta{Name: api.ClusterConfigName},
+	}
+	testRESTEndpoint(
+		t, &config.ServerConfig{},
+		http.MethodPost, "/v1beta1/system/cluster-config/refresh",
+		[]restTestCase{
+			{
+				name:          "ClusterConfig not found",
+				clientBuilder: fake.NewClientBuilder(),
+				assertions: func(t *testing.T, w *httptest.ResponseRecorder, _ client.Client) {
+					require.Equal(t, http.StatusNotFound, w.Code)
 				},
 			},
-			assertions: func(t *testing.T, r *connect.Response[svcv1alpha1.RefreshClusterConfigResponse], err error) {
-				require.NoError(t, err)
+			{
+				name:          "refreshes ClusterConfig",
+				clientBuilder: fake.NewClientBuilder().WithObjects(testConfig),
+				assertions: func(t *testing.T, w *httptest.ResponseRecorder, c client.Client) {
+					require.Equal(t, http.StatusOK, w.Code)
 
-				config := r.Msg.GetClusterConfig()
-				require.Equal(t, api.ClusterConfigName, config.Name)
-
-				annotation := config.GetAnnotations()[kargoapi.AnnotationKeyRefresh]
-				refreshTime, err := time.Parse(time.RFC3339, annotation)
-				require.NoError(t, err)
-
-				// Make sure we set timestamp is close to now
-				// Assume it doesn't take 3 seconds to run this unit test.
-				require.WithinDuration(t, time.Now(), refreshTime, 3*time.Second)
-
+					// Verify the ClusterConfig was refreshed
+					config := &kargoapi.ClusterConfig{}
+					err := c.Get(
+						t.Context(),
+						client.ObjectKeyFromObject(testConfig),
+						config,
+					)
+					require.NoError(t, err)
+					require.NotEmpty(t, config.Annotations[kargoapi.AnnotationKeyRefresh])
+				},
 			},
 		},
-	}
-	for name, ts := range testSets {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-
-			ctx := context.Background()
-
-			client, err := kubernetes.NewClient(
-				ctx,
-				&rest.Config{},
-				kubernetes.ClientOptions{
-					SkipAuthorization: true,
-					NewInternalClient: func(
-						_ context.Context,
-						_ *rest.Config,
-						scheme *runtime.Scheme,
-					) (client.Client, error) {
-						return fake.NewClientBuilder().
-							WithScheme(scheme).
-							WithObjects(ts.objects...).
-							Build(), nil
-					},
-				},
-			)
-			require.NoError(t, err)
-
-			svr := &server{
-				client: client,
-			}
-			res, err := svr.RefreshClusterConfig(ctx, connect.NewRequest(ts.req))
-			ts.assertions(t, res, err)
-		})
-	}
+	)
 }
